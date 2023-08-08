@@ -7,20 +7,23 @@ let calculateButton = document.querySelector("#calculate-button");
 let weightInput = document.querySelector("#weight-input");
 let plateVisualizer = document.querySelector("#plate-visualizer");
 
-// Calculate on new entered weight
-weightInput.addEventListener("input", function (e) {
+// Calculate at start and in realtime
+calculatePlates();
+weightInput.addEventListener("input", calculatePlates);
+
+function calculatePlates(){
     let inputWeight = Math.abs(weightInput.value);
     
     if (inputWeight < 45){
-        alertWeightTooLow();
+        alert("Weight is too low!");
     }
 
     else if (inputWeight === 45){
-        alertWeightEqualsBar();
+        alert("Weight is equal to the bar!");
     }
 
     else if (inputWeight > 1500){
-        alertWeightTooHigh();
+        alert("Weight is too high!");
     }
 
     else { // Remove weight of bar, reduce to half
@@ -28,20 +31,6 @@ weightInput.addEventListener("input", function (e) {
         inputWeight /= 2;
         displayPlates(calcPlates(inputWeight));
     }
-  });
-
-
-// Edge case functions
-function alertWeightTooLow(){
-    alert("Weight is too low!");
-}
-
-function alertWeightEqualsBar(){
-    alert("Weight is equal to the bar!");
-}
-
-function alertWeightTooHigh(){
-    alert("Weight is too high!");
 }
 
 // Generate array with plates necessary
@@ -78,15 +67,23 @@ function displayPlates(platesNeeded) {
 
         let plateContainer = document.createElement("div");
         plateContainer.classList.add("plate-container");
-        plateContainer.setAttribute("id", increments[key]);
+        plateContainer.setAttribute("class", "plate-" + increments[key]);
 
         // Include custom remainder if not known increment
-        plateContainer.textContent = (increments[key])
+        let description = document.createElement("h3");
+        description.textContent = (increments[key])
             ? platesNeeded[key] + " \u00D7 " + increments[key]
             : platesNeeded[key] + "lbs.";
 
-        for (i = 0; i <= platesNeeded[key]; i++) {
-            plateContainer.appendChild(document.createElement("div"));
+        plateContainer.appendChild(description);
+        let plates = plateContainer.appendChild(document.createElement("div"));
+        plates.classList.add("plates");
+
+        // Skip if we're at custom weights
+        if (key < increments.length){
+            for (i = 1; i <= platesNeeded[key]; i++) {
+                plates.appendChild(document.createElement("div"));
+            }
         }
 
         plateVisualizer.appendChild(plateContainer);
