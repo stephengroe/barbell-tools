@@ -7,13 +7,42 @@ let calculateButton = document.querySelector("#calculate-button");
 let weightInput = document.querySelector("#weight-input");
 let plateVisualizer = document.querySelector("#plate-visualizer");
 
-// Remove weight of bar, reduce to half
+
 calculateButton.addEventListener('click', function (e) {
-    let inputWeight = weightInput.value;
-    inputWeight -= barWeight;
-    inputWeight /= 2;
-    displayPlates(calcPlates(inputWeight));
+    let inputWeight = Math.abs(weightInput.value);
+    
+    if (inputWeight < 45){
+        alertWeightTooLow();
+    }
+
+    else if (inputWeight === 45){
+        alertWeightEqualsBar();
+    }
+
+    else if (inputWeight > 1500){
+        alertWeightTooHigh();
+    }
+
+    else { // Remove weight of bar, reduce to half
+        inputWeight -= barWeight;
+        inputWeight /= 2;
+        displayPlates(calcPlates(inputWeight));
+    }
   });
+
+
+// Edge case functions
+function alertWeightTooLow(){
+    alert("Weight is too low!");
+}
+
+function alertWeightEqualsBar(){
+    alert("Weight is equal to the bar!");
+}
+
+function alertWeightTooHigh(){
+    alert("Weight is too high!");
+}
 
 // Generate array with plates necessary
 function calcPlates(weight){
