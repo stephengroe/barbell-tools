@@ -7,43 +7,53 @@ let calculateButton = document.querySelector("#calculate-button");
 let weightInput = document.querySelector("#weight-input");
 let plateVisualizer = document.querySelector("#plate-visualizer");
 
-// Remove bar weight and split in half
+// Remove weight of bar, reduce to half
 calculateButton.addEventListener('click', function (e) {
     let inputWeight = weightInput.value;
     inputWeight -= barWeight;
     inputWeight /= 2;
-    plateVisualizer.textContent = calcPlates(inputWeight);
+    displayPlates(calcPlates(inputWeight));
   });
 
 // Generate array with plates necessary
 function calcPlates(weight){
-    let platesNeeded = [];
+    let platesNeeded = Array(plateWeights.length).fill(0);
     let remainingWeight = weight;
 
-    for (let activePlate of plateWeights) {
-        if (remainingWeight / activePlate > 0) {
-            let plateNum = Math.floor(remainingWeight / activePlate);
-            platesNeeded.push(plateNum); //
-            remainingWeight -= (plateNum * activePlate);
-        }
-        else {
-            platesNeeded.push(0);
-        }
+    for (let key in plateWeights) {
+        let activePlate = plateWeights[key];
+        
+        if (remainingWeight / activePlate < 1) {continue;}
+
+        platesNeeded[key] = Math.floor(remainingWeight / activePlate);
+        remainingWeight %= activePlate;
     }
     return platesNeeded;
 }
 
+// Create DOM element with divs for each plate
+function displayPlates(platesNeeded) {
 
+    removeChildNodes(plateVisualizer);
 
+    for (let key in platesNeeded){
+        if (platesNeeded[key] === 0) {continue;}
 
+        let plateContainer = document.createElement("div");
+        plateContainer.classList.add("plate-container");
+        plateContainer.setAttribute("id", plateWeights[key]);
+        plateContainer.textContent = platesNeeded[key] + " \u00D7 " + plateWeights[key];
 
+        for (i = 0; i <= platesNeeded[key]; i++) {
+            plateContainer.appendChild(document.createElement("div"));
+        }
 
-//   const div = document.createElement('div');
+        plateVisualizer.appendChild(plateContainer);
+    }
+}
 
-// const container = document.querySelector('#container');
-
-// const content = document.createElement('div');
-// content.classList.add('content');
-// content.textContent = 'This is the glorious text-content!';
-
-// container.appendChild(content);
+function removeChildNodes(element){
+    while (element.firstChild){
+        element.removeChild(element.firstChild);
+    }
+}

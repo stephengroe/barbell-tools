@@ -1,0 +1,15 @@
+#plate-visualizer {
+    display: flex;
+    justify-content: space-around;
+}
+
+#plate-visualizer > div {
+    color: white;
+    text-align: center;
+    padding: 10px;
+    min-height: 10px;
+    min-width: 25px;
+    background-color: blue;
+    border: solid black 1px;
+    margin: 10px;
+}
