@@ -7,8 +7,8 @@ let calculateButton = document.querySelector("#calculate-button");
 let weightInput = document.querySelector("#weight-input");
 let plateVisualizer = document.querySelector("#plate-visualizer");
 
-
-calculateButton.addEventListener('click', function (e) {
+// Calculate on new entered weight
+weightInput.addEventListener("input", function (e) {
     let inputWeight = Math.abs(weightInput.value);
     
     if (inputWeight < 45){
