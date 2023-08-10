@@ -77,20 +77,21 @@ function generatePlateIcons(plateIncrement, numberOfPlates, incrementContainer){
     let description = incrementContainer.appendChild(document.createElement("h3"));
     let plateContainer = incrementContainer.appendChild(document.createElement("div"));
     plateContainer.classList.add("plateContainer");
-    let plateIcon = plateContainer.appendChild(document.createElement("div"));
+    let plateIcon = document.createElement("div");
     plateIcon.classList.add("plateIcon");
 
     // For custom increments
     if (!plateIncrement){
         description.textContent = numberOfPlates + "lbs.";
+        plateContainer.appendChild(plateIcon);
         return incrementContainer;
     }
 
     description.textContent = numberOfPlates + " \u00D7 " + plateIncrement;
     for (i = 1; i <= numberOfPlates; i++) {
-        plateIcon.cloneNode();
+        plateContainer.appendChild(plateIcon.cloneNode());
     }
-
+    
     return incrementContainer;
 }
 
