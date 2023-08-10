@@ -26,10 +26,12 @@ function calculatePlates(){
         alert("Weight is too high!");
     }
 
-    else { // Remove weight of bar, reduce to half
+    else {
+        // Remove weight of bar, reduce to half
         inputWeight -= barWeight;
         inputWeight /= 2;
-        displayPlates(calcPlates(inputWeight));
+
+        updateVisualizer(calcPlates(inputWeight));
     }
 }
 
@@ -48,7 +50,7 @@ function calcPlates(weight){
     }
 
     // Include additional weight not included in known increments
-    // Round to two decimals to fix floating point issues
+    // Rounding required for floating point issues
     if (remainingWeight !== 0){
         remainingWeight = Math.round(remainingWeight * 100) / 100;
         platesNeeded.push(remainingWeight);
@@ -58,7 +60,7 @@ function calcPlates(weight){
 }
 
 // Create DOM element with divs for each plate
-function displayPlates(platesNeeded) {
+function updateVisualizer(platesNeeded) {
 
     removeChildNodes(plateVisualizer);
 
@@ -68,26 +70,33 @@ function displayPlates(platesNeeded) {
         let plateContainer = document.createElement("div");
         plateContainer.classList.add("plate-container");
         plateContainer.setAttribute("class", "plate-" + increments[key]);
-
-        // Include custom remainder if not known increment
-        let description = document.createElement("h3");
-        description.textContent = (increments[key])
-            ? platesNeeded[key] + " \u00D7 " + increments[key]
-            : platesNeeded[key] + "lbs.";
-
-        plateContainer.appendChild(description);
-        let plates = plateContainer.appendChild(document.createElement("div"));
-        plates.classList.add("plates");
-
-        // Skip if we're at custom weights
-        if (key < increments.length){
-            for (i = 1; i <= platesNeeded[key]; i++) {
-                plates.appendChild(document.createElement("div"));
-            }
-        }
-
-        plateVisualizer.appendChild(plateContainer);
+        plateVisualizer.appendChild(
+            generatePlateDivs(increments[key], platesNeeded[key], plateContainer));
     }
+}
+
+function generatePlateDivs(plateIncrement, numberOfPlates, plateContainer){
+    let description = plateContainer.appendChild(document.createElement("h3"));
+    let plateGroup = plateContainer.appendChild(document.createElement("div"));
+    plateGroup.classList.add("plates");
+
+    console.log(plateIncrement);
+
+    if (plateIncrement){
+        description.textContent = numberOfPlates + " \u00D7 " + plateIncrement;
+
+        for (i = 1; i <= numberOfPlates; i++) {
+            plateGroup.appendChild(document.createElement("div"));
+        }
+    }
+
+    // For custom increments
+    else {
+        description.textContent = numberOfPlates + "lbs.";
+        plateGroup.appendChild(document.createElement("div"));
+    }
+
+    return plateContainer;
 }
 
 function removeChildNodes(element){
