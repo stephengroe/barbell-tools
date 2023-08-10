@@ -71,29 +71,26 @@ function updateVisualizer(platesNeeded) {
         plateContainer.classList.add("plate-container");
         plateContainer.setAttribute("class", "plate-" + increments[key]);
         plateVisualizer.appendChild(
-            generatePlateDivs(increments[key], platesNeeded[key], plateContainer));
+            generatePlateIcons(increments[key], platesNeeded[key], plateContainer));
     }
 }
 
-function generatePlateDivs(plateIncrement, numberOfPlates, plateContainer){
+function generatePlateIcons(plateIncrement, numberOfPlates, plateContainer){
+
     let description = plateContainer.appendChild(document.createElement("h3"));
     let plateGroup = plateContainer.appendChild(document.createElement("div"));
-    plateGroup.classList.add("plates");
-
-    console.log(plateIncrement);
-
-    if (plateIncrement){
-        description.textContent = numberOfPlates + " \u00D7 " + plateIncrement;
-
-        for (i = 1; i <= numberOfPlates; i++) {
-            plateGroup.appendChild(document.createElement("div"));
-        }
-    }
+    plateGroup.classList.add("plateGroup");
+    let plateIcon = plateGroup.appendChild(document.createElement("div"));
 
     // For custom increments
-    else {
+    if (!plateIncrement){
         description.textContent = numberOfPlates + "lbs.";
-        plateGroup.appendChild(document.createElement("div"));
+        return plateContainer;
+    }
+
+    description.textContent = numberOfPlates + " \u00D7 " + plateIncrement;
+    for (i = 1; i <= numberOfPlates; i++) {
+        plateIcon.cloneNode();
     }
 
     return plateContainer;
