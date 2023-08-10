@@ -59,33 +59,31 @@ function calcPlates(weight){
     return platesNeeded;
 }
 
-// Create DOM element with divs for each plate
 function updateVisualizer(platesNeeded) {
-
     removeChildNodes(plateVisualizer);
 
     for (let key in platesNeeded){
         if (platesNeeded[key] === 0) {continue;}
 
-        let plateContainer = document.createElement("div");
-        plateContainer.classList.add("plate-container");
-        plateContainer.setAttribute("class", "plate-" + increments[key]);
+        let incrementContainer = document.createElement("div");
+        incrementContainer.classList.add("incrementContainer", "plate-" + increments[key]);
         plateVisualizer.appendChild(
-            generatePlateIcons(increments[key], platesNeeded[key], plateContainer));
+            generatePlateIcons(increments[key], platesNeeded[key], incrementContainer));
     }
 }
 
-function generatePlateIcons(plateIncrement, numberOfPlates, plateContainer){
+function generatePlateIcons(plateIncrement, numberOfPlates, incrementContainer){
 
-    let description = plateContainer.appendChild(document.createElement("h3"));
-    let plateGroup = plateContainer.appendChild(document.createElement("div"));
-    plateGroup.classList.add("plateGroup");
-    let plateIcon = plateGroup.appendChild(document.createElement("div"));
+    let description = incrementContainer.appendChild(document.createElement("h3"));
+    let plateContainer = incrementContainer.appendChild(document.createElement("div"));
+    plateContainer.classList.add("plateContainer");
+    let plateIcon = plateContainer.appendChild(document.createElement("div"));
+    plateIcon.classList.add("plateIcon");
 
     // For custom increments
     if (!plateIncrement){
         description.textContent = numberOfPlates + "lbs.";
-        return plateContainer;
+        return incrementContainer;
     }
 
     description.textContent = numberOfPlates + " \u00D7 " + plateIncrement;
@@ -93,7 +91,7 @@ function generatePlateIcons(plateIncrement, numberOfPlates, plateContainer){
         plateIcon.cloneNode();
     }
 
-    return plateContainer;
+    return incrementContainer;
 }
 
 function removeChildNodes(element){

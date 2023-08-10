@@ -58,14 +58,14 @@ body {
     color: white;
 }
 
-.plate-container {
+.incrementContainer {
     display: flex;
     flex-flow: column;
     align-items: center;
     justify-content: center;
 }
 
-.plateGroup {
+.plateContainer {
     display: flex;
     flex-flow: row nowrap;
     justify-content: stretch;
@@ -73,7 +73,7 @@ body {
     margin: auto;
 }
 
-.plateGroup > div {
+.plateIcon {
     background-color: black;
     margin: 10px;
     border-radius: 5px;
@@ -81,37 +81,37 @@ body {
     box-sizing: border-box;
 }
 
-.plate-45 .plateGroup > div {
+.plate-45 .plateContainer > div {
     height: 100px;
     width: 25px;
 /*    background-color: var(--blue);*/
 }
 
-.plate-25 .plateGroup > div {
+.plate-25 .plateContainer > div {
     height: 75px;
     width: 18px;
 /*    background-color: var(--green);*/
 }
 
-.plate-10 .plateGroup > div {
+.plate-10 .plateContainer > div {
     height: 60px;
     width: 10px;
 /*    background-color: var(--white);*/
 }
 
-.plate-5 .plateGroup > div {
+.plate-5 .plateContainer > div {
     height: 40px;
     width: 5px;
 /*    background-color: var(--blue);*/
 }
 
-.plate-2 .plateGroup > div {
+.plate-2 .plateContainer > div {
     height: 20px;
     width: 2px;
 /*    background-color: var(--green);*/
 }
 
-.plate-custom .plateGroup > div {
+.plate-custom .plateContainer > div {
     height: 15px;
 /*    background-color: var(--white);*/
 }
