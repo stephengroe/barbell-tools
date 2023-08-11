@@ -114,10 +114,27 @@ body {
 
 .keypad {
     max-width: 300px;
+    min-height: 350px;
     display: grid;
     grid-template-columns: 33% 33% 33%;
+    grid-template-rows: auto;
 }
 
+/* Reset button display */
 .keypad button {
-    grid-
+    font-family: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    border-width: 0;
+    background-color: var(--red);
+    font-size: 1.5em;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    box-shadow: 0px 5px 0 black;
+}
+
+.keypad button:hover, .keypad button:active {
+    background-color: var(--blue);
 }
