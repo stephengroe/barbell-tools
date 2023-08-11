@@ -4,26 +4,45 @@ let barWeight = 45;
 
 // Get DOM elements
 let calculateButton = document.querySelector("#calculate-button");
-let weightInput = document.querySelector("#weight-input");
+let calcDisplay = document.querySelector("#calc-display");
 let plateVisualizer = document.querySelector("#plate-visualizer");
+let calcButton = document.querySelectorAll(".keypad button");
+
+// Calculator functions
+calcButton.forEach(item => {
+    item.addEventListener("click", function(){
+        updateCalcDisplay(this.textContent);       
+    });
+});
+
+function updateCalcDisplay(input) {
+    switch (input){
+        case "Delete":
+            let numstring = calcDisplay.value.split("");
+            numstring.pop();
+            calcDisplay.value = +numstring.join("");
+            break;
+        default:
+            calcDisplay.value += +input;
+    }
+    calculatePlates(calcDisplay.value);
+}
 
 // Calculate at start and in realtime
-calculatePlates();
-weightInput.addEventListener("input", calculatePlates);
+calculatePlates(315);
 
-function calculatePlates(){
-    let inputWeight = Math.abs(weightInput.value);
+function calculatePlates(inputWeight){
     
-    if (inputWeight < 45){
-        alert("Weight is too low!");
+    if (inputWeight <= 45){
+        //alert("Weight is too low!");
     }
 
     else if (inputWeight === 45){
-        alert("Weight is equal to the bar!");
+        //alert("Weight is equal to the bar!");
     }
 
     else if (inputWeight > 1500){
-        alert("Weight is too high!");
+        //alert("Weight is too high!");
     }
 
     else {
