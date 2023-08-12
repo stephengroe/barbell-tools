@@ -9,8 +9,8 @@
     --lightgrey: #95A3B3;
     --black: #130303;
 
-    --plate-height: 150px;
-    --plate-width: 25px;
+    --plate-height: 100px;
+    --plate-width: 20px;
 
     --x-large: 1;
     --large: .85;
@@ -46,11 +46,13 @@ body {
 }
 
 #wrapper {
-    margin: auto;
+    margin: 0 auto 50px auto;
     border-radius: 50px;
     max-width: 100vw;
     background-color: var(--white);
     border-radius: 50px;
+    padding-bottom: 75px;
+    min-height: 80vh;
 }
 
 #plate-visualizer {
@@ -153,13 +155,13 @@ body {
 
 .calculator {
     max-width: 300px;
-    padding: 50px;
+    padding: 25px;
     text-align: center;
     margin: auto;
 }
 
 .input {
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     font-weight: bold;
 }
 
@@ -180,33 +182,31 @@ body {
 
 .keypad {
     max-width: 300px;
-    min-height: 350px;
+    min-height: 250px;
     display: grid;
     grid-template-columns: 33% 33% 33%;
     grid-template-rows: auto;
+    background-color: var(--red);
+    border-radius: 25px;
+    box-shadow: 0px 0.9px 1.3px hsl(200 200 200 / 0.03),
+    0.1px 3.6px 5.2px -0.1px hsl(200 200 200 / 0.12),
+    0.1px 7.3px 10.6px -0.2px hsl(200 200 200 / 0.2),
+    0.2px 14.9px 21.6px -0.4px hsl(200 200 200 / 0.29);
 }
 
-/* Reset button display */
 .keypad button {
+
+    /* Reset button display */
     font-family: inherit;
     font-style: inherit;
     font-weight: inherit;
     line-height: inherit;
     border-width: 0;
-    background-color: var(--red);
+    background-color: transparent;
     font-size: 1.25em;
     padding: 10px;
     margin: 5px;
-    border-radius: 5px;
-    box-shadow: 0px 5px 0 black;
-    transition: box-shadow 50ms, margin 50ms;
-}
-
-.keypad button:active {
-    margin-top: 9px;
-    margin-bottom: 1px;
-    box-shadow: 0px 1px 0 black;
-    transition: box-shadow 50ms, margin 50ms;
+    color: white;
 }
 
 #copyright {

@@ -32,8 +32,9 @@ function updateCalcDisplay(input) {
     calculatePlates(calcDisplay.textContent);
 }
 
-// Calculate at start and in realtime
-calculatePlates(403);
+// Calculate at start
+calculatePlates(180);
+calcDisplay.textContent = 180;
 
 function calculatePlates(inputWeight){
     
