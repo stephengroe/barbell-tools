@@ -112,6 +112,26 @@ body {
     margin: auto;
 }
 
+.input {
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+.input #calc-display {
+    display: block;
+    min-width: 50%;
+    font-size: 3em;
+    padding: 0px;
+    margin: 0px;
+}
+
+.input #unit {
+    font-size: 1em;
+    text-transform: uppercase;
+    color: grey;
+    margin-top: 10px;
+}
+
 .keypad {
     max-width: 300px;
     min-height: 350px;

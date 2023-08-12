@@ -18,17 +18,18 @@ calcButton.forEach(item => {
 function updateCalcDisplay(input) {
     switch (input){
         case "⌫":
-            let numstring = calcDisplay.value.split("");
+            let numstring = calcDisplay.textContent.split("");
             numstring.pop();
-            calcDisplay.value = +numstring.join("");
+            calcDisplay.textContent = +numstring.join("");
             break;
-        case "clear":
-            calcDisplay.value = "";
+        case "Clear":
+            calcDisplay.textContent = "0";
             break;
         default:
-            calcDisplay.value += +input;
+            if (calcDisplay.textContent === "0") calcDisplay.textContent = input;
+            else calcDisplay.textContent += input;
     }
-    calculatePlates(calcDisplay.value);
+    calculatePlates(calcDisplay.textContent);
 }
 
 // Calculate at start and in realtime
