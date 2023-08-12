@@ -89,7 +89,12 @@ function updateVisualizer(platesNeeded) {
         if (platesNeeded[key] === 0) {continue;}
 
         let incrementContainer = document.createElement("div");
-        incrementContainer.classList.add("incrementContainer", "plate-" + increments[key].toString().replace(".","-"));
+
+        // Add kebab-style class for increment, otherwise "custom"
+        let plateIconClass = "plate-";
+        if (!increments[key]) plateIconClass += "custom";
+        else plateIconClass += increments[key].toString().replace(".","-");
+        incrementContainer.classList.add("incrementContainer", plateIconClass);
         plateVisualizer.appendChild(
             generatePlateIcons(increments[key], platesNeeded[key], incrementContainer));
     }
