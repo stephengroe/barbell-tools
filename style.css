@@ -8,6 +8,16 @@
     --blue: #26547C;
     --lightgrey: #95A3B3;
     --black: #130303;
+
+    --plate-height: 150px;
+    --plate-width: 25px;
+
+    --x-large: 1;
+    --large: .85;
+    --medium: .65;
+    --small: .45;
+    --x-small: .3;
+    --xx-small: .2;
 }
 
 * {
@@ -48,19 +58,21 @@ body {
     flex-flow: row nowrap;
     justify-content: space-around;
     text-align: center;
-    padding-top: 25px;
+    padding-top: 35px;
+    margin: 0 10%;
 }
 
 .incrementContainer {
     display: flex;
     flex-flow: column;
     align-items: center;
-    justify-content: center;
 }
 
 .incrementContainer h3 {
-
-
+    font-weight: 400;
+    font-size: 1em;
+    justify-self: flex-start;
+    margin-bottom: 20px;;
 }
 
 .plateContainer {
@@ -69,22 +81,48 @@ body {
     justify-content: stretch;
     align-items: center;
     margin: auto;
+    gap: 5px;
 }
 
 .plateIcon {
-    width: 100px;
-    height: 100px;
     background-color: black;
-    margin: 10px;
-    border-radius: 100%;
-    border: 10px solid black;
-    box-sizing: border-box;
-    box-shadow: inset 5px 5px 0 -5px #aaa;
-    transform: rotateY(0deg);
-    transition: transform 1s;
+    border-radius: 7px;
 }
 
-.plateIcon:hover {
+.plate-45 .plateIcon {
+    width: calc(var(--plate-width) * var(--x-large));
+    height: calc(var(--plate-height) * var(--x-large));
+}
+
+.plate-25 .plateIcon {
+    width: calc(var(--plate-width) * var(--large));
+    height: calc(var(--plate-height) * var(--large));
+}
+
+.plate-10 .plateIcon {
+    width: calc(var(--plate-width) * var(--medium));
+    height: calc(var(--plate-height) * var(--medium));
+}
+
+.plate-5 .plateIcon {
+    width: calc(var(--plate-width) * var(--small));
+    height: calc(var(--plate-height) * var(--small));
+}
+
+.plate-2-5 .plateIcon {
+    width: calc(var(--plate-width) * var(--x-small));
+    height: calc(var(--plate-height) * var(--x-small));
+}
+
+.plate-custom .plateIcon {
+    width: calc(var(--plate-width) * var(--xx-small));
+    height: calc(var(--plate-height) * var(--xx-small));
+    background-color: var(--lightgrey);
+}
+
+
+
+/* .plateIcon:hover {
     transform: rotateY(45deg);
     transition: transform 1s;
 }
@@ -111,7 +149,7 @@ body {
     border-radius: 100%;
     bottom: 0px;
     position: absolute;
-}
+}*/
 
 .calculator {
     max-width: 300px;
@@ -136,7 +174,7 @@ body {
 .input #unit {
     font-size: 1em;
     text-transform: uppercase;
-    color: grey;
+    color: var(--lightgrey);
     margin-top: 10px;
 }
 

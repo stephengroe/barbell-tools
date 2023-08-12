@@ -33,7 +33,7 @@ function updateCalcDisplay(input) {
 }
 
 // Calculate at start and in realtime
-calculatePlates(315);
+calculatePlates(403);
 
 function calculatePlates(inputWeight){
     
@@ -89,14 +89,13 @@ function updateVisualizer(platesNeeded) {
         if (platesNeeded[key] === 0) {continue;}
 
         let incrementContainer = document.createElement("div");
-        incrementContainer.classList.add("incrementContainer", "plate-" + increments[key]);
+        incrementContainer.classList.add("incrementContainer", "plate-" + increments[key].toString().replace(".","-"));
         plateVisualizer.appendChild(
             generatePlateIcons(increments[key], platesNeeded[key], incrementContainer));
     }
 }
 
 function generatePlateIcons(plateIncrement, numberOfPlates, incrementContainer){
-
     let description = incrementContainer.appendChild(document.createElement("h3"));
     let plateContainer = incrementContainer.appendChild(document.createElement("div"));
     plateContainer.classList.add("plateContainer");
