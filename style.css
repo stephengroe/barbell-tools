@@ -128,17 +128,14 @@ body {
     line-height: inherit;
     border-width: 0;
     background-color: var(--red);
-    font-size: 1.5em;
+    font-size: 1.25em;
     padding: 10px;
     margin: 5px;
     border-radius: 5px;
     box-shadow: 0px 5px 0 black;
+
 }
 
 .keypad button:hover, .keypad button:active {
     background-color: var(--blue);
-}
-
-.keypad button.two-column {
-    grid-column-end: span 2;
 }

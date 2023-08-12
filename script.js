@@ -22,6 +22,9 @@ function updateCalcDisplay(input) {
             numstring.pop();
             calcDisplay.value = +numstring.join("");
             break;
+        case "clear":
+            calcDisplay.value = "";
+            break;
         default:
             calcDisplay.value += +input;
     }
