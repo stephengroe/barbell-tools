@@ -138,3 +138,7 @@ body {
 .keypad button:hover, .keypad button:active {
     background-color: var(--blue);
 }
+
+.keypad button.two-column {
+    grid-column-end: span 2;
+}

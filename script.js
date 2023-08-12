@@ -17,7 +17,7 @@ calcButton.forEach(item => {
 
 function updateCalcDisplay(input) {
     switch (input){
-        case "Delete":
+        case "⌫":
             let numstring = calcDisplay.value.split("");
             numstring.pop();
             calcDisplay.value = +numstring.join("");
