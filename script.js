@@ -1,6 +1,7 @@
 // Standard divisions of plates and bar weight in pounds
 let increments = [45, 25, 10, 5, 2.5];
 let barWeight = 45;
+let enteredWeight = 315;
 
 // Get DOM elements
 let calculateButton = document.querySelector("#calculate-button");
@@ -11,30 +12,32 @@ let calcButton = document.querySelectorAll(".keypad button");
 // Calculator functions
 calcButton.forEach(item => {
     item.addEventListener("click", function(){
-        updateCalcDisplay(this.textContent);       
+        updateCalcDisplay(this.textContent);
     });
 });
 
 function updateCalcDisplay(input) {
+    console.log(input);
     switch (input){
         case "⌫":
-            let numstring = calcDisplay.textContent.split("");
+            let numstring = enteredWeight.toString().split("");
             numstring.pop();
-            calcDisplay.textContent = +numstring.join("");
+            enteredWeight = +numstring.join("");
             break;
         case "Clear":
-            calcDisplay.textContent = "0";
+            enteredWeight = 0;
             break;
         default:
-            if (calcDisplay.textContent === "0") calcDisplay.textContent = input;
-            else calcDisplay.textContent += input;
+            if (enteredWeight === 0) enteredWeight = input;
+            else enteredWeight += input;
     }
-    calculatePlates(calcDisplay.textContent);
+    calcDisplay.textContent = enteredWeight;
+    calculatePlates(enteredWeight);
 }
 
 // Calculate at start
-calculatePlates(180);
-calcDisplay.textContent = 180;
+calcDisplay.textContent = enteredWeight;
+calculatePlates(enteredWeight);
 
 function calculatePlates(inputWeight){
     
