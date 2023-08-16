@@ -1,23 +1,24 @@
-// Standard divisions of plates and bar weight in pounds
 let increments = [45, 25, 10, 5, 2.5];
 let barWeight = 45;
-let enteredWeight = 315;
-
-// Get DOM elements
+let enteredWeight = 380;
 let calculateButton = document.querySelector("#calculate-button");
 let calcDisplay = document.querySelector("#calc-display");
 let plateVisualizer = document.querySelector("#plate-visualizer");
 let calcButton = document.querySelectorAll(".keypad button");
 
-// Calculator functions
+// Set up display at start
+calcDisplay.textContent = enteredWeight;
+calculatePlates(enteredWeight);
+
+// Sense button clicks
 calcButton.forEach(item => {
     item.addEventListener("click", function(){
-        updateCalcDisplay(this.textContent);
+        updateWeight(this.textContent);
+        updateVisualizer(enteredWeight);
     });
 });
 
-function updateCalcDisplay(input) {
-    console.log(input);
+function updateWeight(input) {
     switch (input){
         case "⌫":
             let numstring = enteredWeight.toString().split("");
@@ -32,61 +33,12 @@ function updateCalcDisplay(input) {
             else enteredWeight += input;
     }
     calcDisplay.textContent = enteredWeight;
-    calculatePlates(enteredWeight);
 }
 
-// Calculate at start
-calcDisplay.textContent = enteredWeight;
-calculatePlates(enteredWeight);
+function updateVisualizer(weight) {
+    let platesNeeded = calculatePlates(weight);
 
-function calculatePlates(inputWeight){
-    
-    if (inputWeight <= 45){
-        //alert("Weight is too low!");
-    }
 
-    else if (inputWeight === 45){
-        //alert("Weight is equal to the bar!");
-    }
-
-    else if (inputWeight > 1500){
-        //alert("Weight is too high!");
-    }
-
-    else {
-        // Remove weight of bar, reduce to half
-        inputWeight -= barWeight;
-        inputWeight /= 2;
-
-        updateVisualizer(calcPlates(inputWeight));
-    }
-}
-
-// Generate array with plates necessary
-function calcPlates(weight){
-    let platesNeeded = Array(increments.length).fill(0);
-    let remainingWeight = weight;
-
-    for (let key in increments) {
-        let activePlate = increments[key];
-
-        if (remainingWeight / activePlate < 1) {continue;}
-
-        platesNeeded[key] = Math.floor(remainingWeight / activePlate);
-        remainingWeight %= activePlate;
-    }
-
-    // Include additional weight not included in known increments
-    // Rounding required for floating point issues
-    if (remainingWeight !== 0){
-        remainingWeight = Math.round(remainingWeight * 100) / 100;
-        platesNeeded.push(remainingWeight);
-    }
-
-    return platesNeeded;
-}
-
-function updateVisualizer(platesNeeded) {
     removeChildNodes(plateVisualizer);
 
     for (let key in platesNeeded){
@@ -102,6 +54,26 @@ function updateVisualizer(platesNeeded) {
         plateVisualizer.appendChild(
             generatePlateIcons(increments[key], platesNeeded[key], incrementContainer));
     }
+}
+
+// Generate array with plates necessary
+function calculatePlates(weight){
+
+    // Remove weight of bar, reduce to one side of the bar
+    let remainingWeight = (weight - barWeight) / 2;
+
+    let platesNeeded = increments.map((increment) => {
+        let leftover = remainingWeight;
+        remainingWeight %= increment;
+        return Math.floor(leftover / increment);
+    });
+
+    // Add custom weight increments, rounding required for floating point issues
+    if (remainingWeight > 0) platesNeeded.push(
+        Math.round(remainingWeight * 100) / 100);
+
+    console.log(platesNeeded);
+    return platesNeeded;
 }
 
 function generatePlateIcons(plateIncrement, numberOfPlates, incrementContainer){
