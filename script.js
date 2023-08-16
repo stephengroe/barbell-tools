@@ -3,97 +3,75 @@ let barWeight = 45;
 let enteredWeight = 380;
 let calculateButton = document.querySelector("#calculate-button");
 let calcDisplay = document.querySelector("#calc-display");
-let plateVisualizer = document.querySelector("#visualizer");
+let visualizer = document.querySelector("#visualizer");
 let calcButton = document.querySelectorAll(".keypad button");
 
 // Set up display at start
 calcDisplay.textContent = enteredWeight;
 calculatePlates(enteredWeight);
 
-// Sense button clicks
+// Calculator functions
 calcButton.forEach(item => {
     item.addEventListener("click", function(){
-        updateWeight(this.textContent);
+        const input = this.textContent;
+        switch (input){
+            case "⌫":
+                enteredWeight = enteredWeight.toString().slice(0, -1);
+                break;
+            case "Clear":
+                enteredWeight = 0;
+                break;
+            default:
+                if (enteredWeight === 0) enteredWeight = input;
+                else enteredWeight += input;
+        }
+        calcDisplay.textContent = enteredWeight;
         updateVisualizer(enteredWeight);
     });
 });
 
-function updateWeight(input) {
-    switch (input){
-        case "⌫":
-            let numstring = enteredWeight.toString().split("");
-            numstring.pop();
-            enteredWeight = +numstring.join("");
-            break;
-        case "Clear":
-            enteredWeight = 0;
-            break;
-        default:
-            if (enteredWeight === 0) enteredWeight = input;
-            else enteredWeight += input;
-    }
-    calcDisplay.textContent = enteredWeight;
-}
-
 function updateVisualizer(weight) {
-    let platesNeeded = calculatePlates(weight);
 
-    removeChildNodes(plateVisualizer);
+    const platesNeeded = calculatePlates(weight);
+    removeChildNodes(visualizer);
 
-    for (let key in platesNeeded){
-        if (platesNeeded[key] === 0) {continue;}
+    for (let increment of platesNeeded){
+        if (increment[1] === 0) {continue;}
 
+        // Create container
         let incrementContainer = document.createElement("div");
-
-        // Add kebab-style class for increment, otherwise "custom"
-        let plateIconClass = "plate-";
-        if (!increments[key]) plateIconClass += "custom";
-        else plateIconClass += increments[key].toString().replace(".","-");
+        let plateIconClass = "plate-" + increment[0].toString().replace(".","-");
         incrementContainer.classList.add("incrementContainer", plateIconClass);
-        plateVisualizer.appendChild(
-            generatePlateIcons(increments[key], platesNeeded[key], incrementContainer));
+
+        // Create text
+        let description = incrementContainer.appendChild(document.createElement("h3"));
+        description.textContent = increment[1] + " \u00D7 " + increment[0];
+
+        // Create plates container
+        let plateContainer = incrementContainer.appendChild(document.createElement("div"));
+        plateContainer.classList.add("plateContainer");
+
+        // Create each plate
+        for (i=0; i<increment[1]; i++){
+            plateContainer.appendChild(document.createElement("div"));
+        }
+
+        visualizer.appendChild(incrementContainer);
     }
 }
 
-// Generate array with plates necessary
+// Generate nested array with plates necessary
 function calculatePlates(weight){
-
-    // Remove weight of bar, reduce to one side of the bar
-    let remainingWeight = (weight - barWeight) / 2;
-
-    let platesNeeded = increments.map((increment) => {
-        let leftover = remainingWeight;
-        remainingWeight %= increment;
-        return Math.floor(leftover / increment);
-    });
-
-    // Add custom weight increments, rounding required for floating point issues
-    if (remainingWeight > 0) platesNeeded.push(
-        Math.round(remainingWeight * 100) / 100);
-
-    console.log(platesNeeded);
-    return platesNeeded;
-}
-
-function generatePlateIcons(plateIncrement, numberOfPlates, incrementContainer){
-    let description = incrementContainer.appendChild(document.createElement("h3"));
-    let plateContainer = incrementContainer.appendChild(document.createElement("div"));
-    plateContainer.classList.add("plateContainer");
-    let plateIcon = document.createElement("div");
-
-    // For custom increments
-    if (!plateIncrement){
-        description.textContent = numberOfPlates + "lbs.";
-        plateContainer.appendChild(plateIcon);
-        return incrementContainer;
-    }
-
-    description.textContent = numberOfPlates + " \u00D7 " + plateIncrement;
-    for (i = 1; i <= numberOfPlates; i++) {
-        plateContainer.appendChild(plateIcon.cloneNode());
-    }
+        weight = (weight - barWeight) / 2; // Reduce to just one side of bar
+        let platesNeeded = increments.map((increment) => {
+            const plates = Math.floor(weight / increment);
+            weight %= increment;
+            return [increment, plates];
+        });
     
-    return incrementContainer;
+        // Add custom weight increment as a decimal
+        if (weight > 0) platesNeeded.push(["custom", Math.round(weight * 100) / 100]);
+        return platesNeeded;
 }
 
 function removeChildNodes(element){
