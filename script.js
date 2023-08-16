@@ -3,7 +3,7 @@ let barWeight = 45;
 let enteredWeight = 380;
 let calculateButton = document.querySelector("#calculate-button");
 let calcDisplay = document.querySelector("#calc-display");
-let plateVisualizer = document.querySelector("#plate-visualizer");
+let plateVisualizer = document.querySelector("#visualizer");
 let calcButton = document.querySelectorAll(".keypad button");
 
 // Set up display at start
@@ -37,7 +37,6 @@ function updateWeight(input) {
 
 function updateVisualizer(weight) {
     let platesNeeded = calculatePlates(weight);
-
 
     removeChildNodes(plateVisualizer);
 
@@ -81,7 +80,6 @@ function generatePlateIcons(plateIncrement, numberOfPlates, incrementContainer){
     let plateContainer = incrementContainer.appendChild(document.createElement("div"));
     plateContainer.classList.add("plateContainer");
     let plateIcon = document.createElement("div");
-    plateIcon.classList.add("plateIcon");
 
     // For custom increments
     if (!plateIncrement){

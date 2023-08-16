@@ -55,7 +55,7 @@ body {
     min-height: 80vh;
 }
 
-#plate-visualizer {
+#visualizer {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-around;
@@ -86,37 +86,37 @@ body {
     gap: 5px;
 }
 
-.plateIcon {
+[class^="plate-"] {
     background-color: black;
     border-radius: 7px;
 }
 
-.plate-45 .plateIcon {
+.plate-45 {
     width: calc(var(--plate-width) * var(--x-large));
     height: calc(var(--plate-height) * var(--x-large));
 }
 
-.plate-25 .plateIcon {
+.plate-25 {
     width: calc(var(--plate-width) * var(--large));
     height: calc(var(--plate-height) * var(--large));
 }
 
-.plate-10 .plateIcon {
+.plate-10 {
     width: calc(var(--plate-width) * var(--medium));
     height: calc(var(--plate-height) * var(--medium));
 }
 
-.plate-5 .plateIcon {
+.plate-5 {
     width: calc(var(--plate-width) * var(--small));
     height: calc(var(--plate-height) * var(--small));
 }
 
-.plate-2-5 .plateIcon {
+.plate-2-5 {
     width: calc(var(--plate-width) * var(--x-small));
     height: calc(var(--plate-height) * var(--x-small));
 }
 
-.plate-custom .plateIcon {
+.plate-custom {
     width: calc(var(--plate-width) * var(--xx-small));
     height: calc(var(--plate-height) * var(--xx-small));
     background-color: var(--lightgrey);
