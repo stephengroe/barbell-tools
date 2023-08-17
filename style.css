@@ -173,6 +173,19 @@ body {
     margin: 0px;
 }
 
+.error {
+    animation: shake 150ms;
+}
+
+@keyframes shake {
+    0% { transform: translate(0, 0); }
+    13% { transform: translate(3px, 0); }
+    38% { transform: translate(-3px, 0); }
+    63% { transform: translate(3px, 0); }
+    87% { transform: translate(-3px, 0); }
+    100% { transform: translate(0, 0); }
+}
+
 .input #unit {
     font-size: 1em;
     text-transform: uppercase;

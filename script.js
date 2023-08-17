@@ -1,6 +1,6 @@
 let increments = [45, 25, 10, 5, 2.5];
 let barWeight = 45;
-let maxWeight = 2000;
+let maxWeight = 1500;
 let enteredWeight = 380;
 let calculateButton = document.querySelector("#calculate-button");
 let calcDisplay = document.querySelector("#calc-display");
@@ -33,6 +33,10 @@ calcButton.forEach(item => {
         if (updateWeight === "" || updateWeight <= 0) {
             enteredWeight = 0;
         } else if (updateWeight >= maxWeight ) {
+            calcDisplay.classList.add("error");
+            setTimeout(() => {
+                calcDisplay.classList.remove("error");
+              }, "150");
             return;
         } else {
             enteredWeight = updateWeight;
