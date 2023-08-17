@@ -6,26 +6,28 @@
     <title>Plate Visualizer</title>
     <script src="./script.js" defer></script>
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./visualizer.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter');
       </style>
 </head>
 <body>
     <div class="header">
+        <a href="index.html">Home</a>
         <h1>Plate Visualizer</h1>
+        <a href="">Settings</a>
     </div>
 
     <div id="wrapper">
 
-    <div id="visualizer"></div>
+    <div id="visualizer" class="card"></div>
 
-    <div class="calculator">
-        <div class="input">
-            <div id="calc-display"></div>
-            <div id="unit">lbs.</div>
-        </div>
+    <div class="display card">
+        <div id="calc-display"></div>
+        <div id="unit">lbs.</div>
+    </div>
 
-    <div class="keypad">
+    <div class="keypad card">
         <button>1</button>
         <button>2</button>
         <button>3</button>
@@ -41,8 +43,7 @@
     </div>
 
     </div>
-
-    </div>
+    
     <p id="copyright">&copy; <script>document.write(new Date().getFullYear());</script> Stephen Roe</p>
 </body>
 </html>

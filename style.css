@@ -1,4 +1,50 @@
-/* Predefined colors */
+/* Meyer reset */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Variables */
 
 :root {
     --red: #F4442E;
@@ -20,158 +66,80 @@
     --xx-small: .2;
 }
 
-* {
-    padding: 0;
-    margin: 0;
-}
-
 body {
-    background-color: var(--blue);
+    background-color: var(--black);
     font-family: 'Inter', sans-serif;
-    height: 100vh;
-    width: 100vw;
+    min-height: 100vh;
 }
 
 .header {
-    color: var(--black);
-    text-align: center;
-    padding: 20px;
-    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.header a {
+    background-color: var(--lightgrey);
+    border-radius: 100%;
+    display: block;
+    width: 45px;
+    height: 45px;
 }
 
 .header h1 {
     font-weight: 200;
-    font-size: 1.25em;
+    font-size: 1.25rem;
     color: var(--white);
+    margin: 0 auto;
 }
 
 #wrapper {
-    margin: 0 auto 50px auto;
-    border-radius: 50px;
-    max-width: 100vw;
+    margin: 1ch;
+    max-width: 800px;
+}
+
+.card {
+    padding: 2em;
+    color: var(--black);
+    text-decoration: none;
     background-color: var(--white);
-    border-radius: 50px;
-    padding-bottom: 75px;
-    min-height: 80vh;
-}
-
-#visualizer {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-around;
-    text-align: center;
-    padding-top: 35px;
-    margin: 0 10%;
-}
-
-.incrementContainer {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-}
-
-.incrementContainer h3 {
-    font-weight: 400;
-    font-size: 1em;
-    justify-self: flex-start;
-    margin-bottom: 20px;;
-}
-
-.plateContainer {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: stretch;
-    align-items: center;
-    margin: auto;
-    gap: 5px;
-}
-
-[class*="plate-"] .plateContainer div {
-    background-color: black;
-    border-radius: 7px;
     display: block;
+    border-radius: 25px;
+    margin-bottom: 1ch;
+    max-width: 800px;
 }
 
-.plate-45 .plateContainer div {
-    width: calc(var(--plate-width) * var(--x-large));
-    height: calc(var(--plate-height) * var(--x-large));
+.card h2 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: .5em;
 }
 
-.plate-25 .plateContainer div {
-    width: calc(var(--plate-width) * var(--large));
-    height: calc(var(--plate-height) * var(--large));
-}
-
-.plate-10 .plateContainer div {
-    width: calc(var(--plate-width) * var(--medium));
-    height: calc(var(--plate-height) * var(--medium));
-}
-
-.plate-5 .plateContainer div {
-    width: calc(var(--plate-width) * var(--small));
-    height: calc(var(--plate-height) * var(--small));
-}
-
-.plate-2-5 .plateContainer div {
-    width: calc(var(--plate-width) * var(--x-small));
-    height: calc(var(--plate-height) * var(--x-small));
-}
-
-.plate-custom .plateContainer div {
-    width: calc(var(--plate-width) * var(--xx-small));
-    height: calc(var(--plate-height) * var(--xx-small));
-    background-color: var(--lightgrey);
-}
-
-
-
-/* .plateIcon:hover {
-    transform: rotateY(45deg);
-    transition: transform 1s;
-}
-
-.plateIcon::before {
-    content: "";
-    background-color: var(--white);
-    box-shadow: inset 4px 4px 0 -3px #aaa;
-    border-radius: 100%;
-    width: 20px;
-    height: 20px;
-    display: block;
-    top: calc(50% - 10px);
-    left: calc(50% - 10px);
-    position: absolute;
-}
-
-.plateIcon::after {
-    display: block;
-    content: "";
-    width: 100%;
-    height: 25%;
-    box-shadow: 0px 10px 15px 0px rgb(0 0 0 / 0.25);
-    border-radius: 100%;
-    bottom: 0px;
-    position: absolute;
-}*/
-
-.calculator {
+.display {
+    margin-bottom: 15px;
+    font-weight: bold;
     max-width: 300px;
     padding: 25px;
     text-align: center;
     margin: auto;
+    max-width: 50%;
+    background: var(--lightgrey)
 }
 
-.input {
-    margin-bottom: 15px;
-    font-weight: bold;
-}
-
-.input #calc-display {
+.display #calc-display {
     display: block;
     min-width: 50%;
-    font-size: 3em;
+    font-size: 3rem;
     padding: 0px;
     margin: 0px;
+}
+
+.display #unit {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: var(--lightgrey);
+    margin-top: 10px;
 }
 
 .error {
@@ -187,20 +155,12 @@ body {
     100% { transform: translate(0, 0); }
 }
 
-.input #unit {
-    font-size: 1em;
-    text-transform: uppercase;
-    color: var(--lightgrey);
-    margin-top: 10px;
-}
-
 .keypad {
     max-width: 300px;
     min-height: 250px;
     display: grid;
     grid-template-columns: 33% 33% 33%;
     grid-template-rows: auto;
-    background-color: var(--red);
     border-radius: 25px;
     box-shadow: 0px 0.9px 1.3px hsl(200 200 200 / 0.03),
     0.1px 3.6px 5.2px -0.1px hsl(200 200 200 / 0.12),
@@ -209,23 +169,18 @@ body {
 }
 
 .keypad button {
-
-    /* Reset button display */
-    font-family: inherit;
-    font-style: inherit;
-    font-weight: inherit;
-    line-height: inherit;
     border-width: 0;
-    background-color: transparent;
-    font-size: 1.25em;
+    background-color: #eee;
+    border-radius: 25px;
+    font-size: 1.25rem;
     padding: 10px;
     margin: 5px;
-    color: white;
+    color: var(--black);
 }
 
 #copyright {
     text-align: center;
-    font-size: .75em;
-    color: var(--white);
-    padding: 15px;
+    font-size: .75rem;
+    color: var(--lightgrey);
+    bottom: 10px;
 }

@@ -1,0 +1,67 @@
+#visualizer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    text-align: center;
+    padding-top: 35px;
+    margin: 0 10%;
+}
+
+.incrementContainer {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.incrementContainer h3 {
+    font-weight: 400;
+    font-size: 1rem;
+    justify-self: flex-start;
+    margin-bottom: 20px;;
+}
+
+.plateContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: stretch;
+    align-items: center;
+    margin: auto;
+    gap: 5px;
+}
+
+[class*="plate-"] .plateContainer div {
+    background-color: black;
+    border-radius: 7px;
+    display: block;
+}
+
+.plate-45 .plateContainer div {
+    width: calc(var(--plate-width) * var(--x-large));
+    height: calc(var(--plate-height) * var(--x-large));
+}
+
+.plate-25 .plateContainer div {
+    width: calc(var(--plate-width) * var(--large));
+    height: calc(var(--plate-height) * var(--large));
+}
+
+.plate-10 .plateContainer div {
+    width: calc(var(--plate-width) * var(--medium));
+    height: calc(var(--plate-height) * var(--medium));
+}
+
+.plate-5 .plateContainer div {
+    width: calc(var(--plate-width) * var(--small));
+    height: calc(var(--plate-height) * var(--small));
+}
+
+.plate-2-5 .plateContainer div {
+    width: calc(var(--plate-width) * var(--x-small));
+    height: calc(var(--plate-height) * var(--x-small));
+}
+
+.plate-custom .plateContainer div {
+    width: calc(var(--plate-width) * var(--xx-small));
+    height: calc(var(--plate-height) * var(--xx-small));
+    background-color: var(--lightgrey);
+}
