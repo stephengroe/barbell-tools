@@ -86,37 +86,38 @@ body {
     gap: 5px;
 }
 
-[class^="plate-"] {
+[class*="plate-"] .plateContainer div {
     background-color: black;
     border-radius: 7px;
+    display: block;
 }
 
-.plate-45 {
+.plate-45 .plateContainer div {
     width: calc(var(--plate-width) * var(--x-large));
     height: calc(var(--plate-height) * var(--x-large));
 }
 
-.plate-25 {
+.plate-25 .plateContainer div {
     width: calc(var(--plate-width) * var(--large));
     height: calc(var(--plate-height) * var(--large));
 }
 
-.plate-10 {
+.plate-10 .plateContainer div {
     width: calc(var(--plate-width) * var(--medium));
     height: calc(var(--plate-height) * var(--medium));
 }
 
-.plate-5 {
+.plate-5 .plateContainer div {
     width: calc(var(--plate-width) * var(--small));
     height: calc(var(--plate-height) * var(--small));
 }
 
-.plate-2-5 {
+.plate-2-5 .plateContainer div {
     width: calc(var(--plate-width) * var(--x-small));
     height: calc(var(--plate-height) * var(--x-small));
 }
 
-.plate-custom {
+.plate-custom .plateContainer div {
     width: calc(var(--plate-width) * var(--xx-small));
     height: calc(var(--plate-height) * var(--xx-small));
     background-color: var(--lightgrey);
