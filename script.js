@@ -1,5 +1,6 @@
 let increments = [45, 25, 10, 5, 2.5];
 let barWeight = 45;
+let maxWeight = 2000;
 let enteredWeight = 380;
 let calculateButton = document.querySelector("#calculate-button");
 let calcDisplay = document.querySelector("#calc-display");
@@ -14,26 +15,38 @@ calculatePlates(enteredWeight);
 calcButton.forEach(item => {
     item.addEventListener("click", function(){
         const input = this.textContent;
+        let updateWeight = enteredWeight.toString();
+
         switch (input){
             case "⌫":
-                enteredWeight = enteredWeight.toString().slice(0, -1);
+                updateWeight = updateWeight.slice(0, -1);
                 break;
             case "Clear":
-                enteredWeight = 0;
+                updateWeight = "0";
                 break;
             default:
-                if (enteredWeight === 0) enteredWeight = input;
-                else enteredWeight += input;
+                if (updateWeight === "0") updateWeight = input;
+                else updateWeight += input;
         }
+
+        updateWeight = +updateWeight;
+        if (updateWeight === "" || updateWeight <= 0) {
+            enteredWeight = 0;
+        } else if (updateWeight >= maxWeight ) {
+            return;
+        } else {
+            enteredWeight = updateWeight;
+        }
+
         calcDisplay.textContent = enteredWeight;
         updateVisualizer(enteredWeight);
     });
 });
 
 function updateVisualizer(weight) {
-
-    const platesNeeded = calculatePlates(weight);
     removeChildNodes(visualizer);
+    if (weight <= barWeight) return;
+    const platesNeeded = calculatePlates(weight);
 
     for (let increment of platesNeeded){
         if (increment[1] === 0) {continue;}
