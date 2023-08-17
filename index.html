@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plate Visualizer</title>
+    <title>Barbell Tools</title>
     <script src="./script.js" defer></script>
     <link rel="stylesheet" href="./style.css">
     <style>
@@ -12,35 +12,25 @@
 </head>
 <body>
     <div class="header">
-        <h1>Plate Visualizer</h1>
+        <h1>Barbell Tools</h1>
     </div>
 
     <div id="wrapper">
 
-    <div id="visualizer"></div>
+    <a href="./visualizer.html" class="card">
+        <h2>Plate Visualizer</h2>
+        <p>See which plates to use for the weight you&rsquo;re going to lift.</p>
+    </a>
 
-    <div class="calculator">
-        <div class="input">
-            <div id="calc-display"></div>
-            <div id="unit">lbs.</div>
-        </div>
+    <a href="./max.html" class="card">
+        <h2>One-Rep Max Calculator</h2>
+        <p>Estimate the maximum weight you can lift for a single rep.</p>
+    </a>
 
-    <div class="keypad">
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-        <button>7</button>
-        <button>8</button>
-        <button>9</button>
-        <button>⌫</button>
-        <button>0</button>
-        <button>Clear</button>
-    </div>
-
-    </div>
+    <a href="./standards.html" class="card">
+        <h2>Strength Standards</h2>
+        <p>Compare your lifts to others in your weight class.</p>
+    </a>
 
     </div>
     <p id="copyright">&copy; <script>document.write(new Date().getFullYear());</script> Stephen Roe</p>
