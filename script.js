@@ -9,7 +9,7 @@ let calcButton = document.querySelectorAll(".keypad button");
 
 // Set up display at start
 calcDisplay.textContent = enteredWeight;
-calculatePlates(enteredWeight);
+updateVisualizer(enteredWeight);
 
 // Calculator functions
 calcButton.forEach(item => {
