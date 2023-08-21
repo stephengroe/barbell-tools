@@ -54,6 +54,7 @@ table {
     --blue: #26547C;
     --lightgrey: #95A3B3;
     --black: #130303;
+    --accent: orange;
 
     --plate-height: 100px;
     --plate-width: 20px;
@@ -106,8 +107,8 @@ body {
     background-color: var(--white);
     display: block;
     border-radius: 25px;
-    margin-bottom: 1ch;
     max-width: 800px;
+    margin: 0 auto 1ch auto;
 }
 
 .card h2 {
@@ -124,7 +125,10 @@ body {
     text-align: center;
     margin: auto;
     max-width: 50%;
-    background: var(--lightgrey)
+    background: var(--lightgrey);
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    color: var(--white);
 }
 
 .display #calc-display {
@@ -133,13 +137,6 @@ body {
     font-size: 3rem;
     padding: 0px;
     margin: 0px;
-}
-
-.display #unit {
-    font-size: 1rem;
-    text-transform: uppercase;
-    color: var(--lightgrey);
-    margin-top: 10px;
 }
 
 .error {
@@ -153,6 +150,24 @@ body {
     63% { transform: translate(3px, 0); }
     87% { transform: translate(-3px, 0); }
     100% { transform: translate(0, 0); }
+}
+
+.display #unit {
+    font-size: 1rem;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+
+.display button {
+    border-width: 0;
+    background-color: var(--accent);
+    border-radius: 25px;
+    font-size: 1.25rem;
+    padding: 10px;
+    margin: 5px;
+    color: var(--black);
+    display: inline-block;
+    clear: both;
 }
 
 .keypad {
