@@ -8,7 +8,7 @@ let visualizer = document.querySelector("#visualizer");
 let calcButton = document.querySelectorAll(".keypad button");
 
 // Set up display at start
-calcDisplay.textContent = enteredWeight;
+updateCalcDisplay(enteredWeight);
 updateVisualizer(enteredWeight);
 
 // Calculator functions
@@ -42,10 +42,20 @@ calcButton.forEach(item => {
             enteredWeight = updateWeight;
         }
 
-        calcDisplay.textContent = enteredWeight;
+        updateCalcDisplay(enteredWeight);
         updateVisualizer(enteredWeight);
     });
 });
+
+
+function updateCalcDisplay(weight){
+    let unitMarker = document.createElement("span");
+    unitMarker.setAttribute("id", "unit");
+    unitMarker.textContent = "lbs.";
+
+    calcDisplay.textContent = weight;
+    calcDisplay.appendChild(unitMarker);
+}
 
 function updateVisualizer(weight) {
     removeChildNodes(visualizer);
