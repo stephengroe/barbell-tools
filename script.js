@@ -2,10 +2,9 @@ let increments = [45, 25, 10, 5, 2.5];
 let barWeight = 45;
 let maxWeight = 1500;
 let enteredWeight = 380;
-let calculateButton = document.querySelector("#calculate-button");
 let calcDisplay = document.querySelector("#calc-display");
 let visualizer = document.querySelector("#visualizer");
-let calcButton = document.querySelectorAll(".keypad button");
+let calcButton = document.querySelectorAll(".keypad button, .display button");
 
 // Set up display at start
 updateCalcDisplay(enteredWeight);
@@ -14,19 +13,25 @@ updateVisualizer(enteredWeight);
 // Calculator functions
 calcButton.forEach(item => {
     item.addEventListener("click", function(){
-        const input = this.textContent;
+        const buttonFunction = this.dataset.buttonFunction;
+        const buttonNumber = this.dataset.buttonNumber;
         let updateWeight = enteredWeight.toString();
 
-        switch (input){
-            case "⌫":
+        switch (buttonFunction){
+            case "delete":
                 updateWeight = updateWeight.slice(0, -1);
                 break;
-            case "Clear":
+            case "clear":
                 updateWeight = "0";
                 break;
-            default:
-                if (updateWeight === "0") updateWeight = input;
-                else updateWeight += input;
+            case "bump":
+                console.log(buttonNumber);
+                updateWeight = +updateWeight + +buttonNumber;
+                updateWeight = updateWeight.toString();
+                break;
+            case "key":
+                if (updateWeight === "0") updateWeight = buttonNumber;
+                else updateWeight += buttonNumber;
         }
 
         updateWeight = +updateWeight;
