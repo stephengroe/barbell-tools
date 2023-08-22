@@ -5,6 +5,7 @@
     text-align: center;
     padding-top: 35px;
     margin: 0 2ch 20px 2ch;
+    min-height: 150px;
 }
 
 .incrementContainer {

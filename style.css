@@ -121,7 +121,7 @@ body {
 
 .display {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-bottom: 15px;
     font-weight: bold;
     padding: 25px;
