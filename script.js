@@ -1,14 +1,7 @@
-let increments = [45, 25, 10, 5, 2.5];
-let barWeight = 45;
-let maxWeight = 1500;
 let enteredWeight = 380;
 let calcDisplay = document.querySelector("#calc-display");
 let visualizer = document.querySelector("#visualizer");
 let calcButton = document.querySelectorAll(".keypad button, .display button");
-
-// Set up display at start
-updateCalcDisplay(enteredWeight);
-updateVisualizer(enteredWeight);
 
 // Calculator functions
 calcButton.forEach(item => {
@@ -62,6 +55,27 @@ function updateCalcDisplay(weight){
     calcDisplay.appendChild(unitMarker);
 }
 
+
+
+
+
+
+
+
+
+
+/* Plate visualizer functions */
+
+
+let increments = [45, 25, 10, 5, 2.5];
+let barWeight = 45;
+let maxWeight = 1500;
+
+// Set up display at start
+updateCalcDisplay(enteredWeight);
+updateVisualizer(enteredWeight);
+
+
 function updateVisualizer(weight) {
     removeChildNodes(visualizer);
     if (weight <= barWeight) return;
@@ -110,4 +124,21 @@ function removeChildNodes(element){
     while (element.firstChild){
         element.removeChild(element.firstChild);
     }
+}
+
+
+
+
+/* One-Rep Max Calculator */
+
+function getMaxReps(weight, reps){
+    let maxReps = [];
+    let oneRepMax = weight * (36 / (37 - reps)); // Brzycki formula
+    
+    for (let i = 1; i <= 10; i++){
+        let estimatedWeight;
+        estimatedWeight = Math.round((37 - i) * oneRepMax / 36 * 10) / 10;
+        maxReps.push([estimatedWeight, i])
+    }
+    return maxReps;
 }
