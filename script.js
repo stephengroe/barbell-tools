@@ -128,7 +128,6 @@ function calculatePlates(weight){
 
 /* One-Rep Max Calculator */
 
-
 // Calculate max reps
 
 function getMaxReps(weight, reps){
@@ -159,10 +158,7 @@ function updateRepVizualizer(maxReps) {
         let maxListItem = document.createElement("li");
         maxListItem.textContent = maxReps[i][1] + " \u00D7 " + maxReps[i][0];
         maxList.appendChild(maxListItem);
-        console.log(maxList);
     }
-
-    console.log(maxList);
 
     visualizer.appendChild(maxHeading)
     visualizer.appendChild(maxList);

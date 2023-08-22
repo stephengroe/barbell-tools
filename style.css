@@ -194,4 +194,6 @@ body {
     font-size: .75rem;
     color: var(--lightgrey);
     bottom: 10px;
+    position: absolute;
+    width: 100%;
 }
