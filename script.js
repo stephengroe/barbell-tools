@@ -55,10 +55,11 @@ function updateCalcDisplay(weight){
     calcDisplay.appendChild(unitMarker);
 }
 
-
-
-
-
+function removeChildNodes(element){
+    while (element.firstChild){
+        element.removeChild(element.firstChild);
+    }
+}
 
 
 
@@ -120,16 +121,15 @@ function calculatePlates(weight){
         return platesNeeded;
 }
 
-function removeChildNodes(element){
-    while (element.firstChild){
-        element.removeChild(element.firstChild);
-    }
-}
+
 
 
 
 
 /* One-Rep Max Calculator */
+
+
+// Calculate max reps
 
 function getMaxReps(weight, reps){
     let maxReps = [];
@@ -137,8 +137,33 @@ function getMaxReps(weight, reps){
     
     for (let i = 1; i <= 10; i++){
         let estimatedWeight;
-        estimatedWeight = Math.round((37 - i) * oneRepMax / 36 * 10) / 10;
+        estimatedWeight = Math.floor((37 - i) * oneRepMax / 36);
         maxReps.push([estimatedWeight, i])
     }
     return maxReps;
+}
+
+// Update visualizer
+
+function updateRepVizualizer(maxReps) {
+    removeChildNodes(visualizer);
+
+    // Show 1-rep max
+    let maxHeading = document.createElement("h3");
+    maxHeading.textContent = maxReps[0][1] + " \u00D7 " + maxReps[0][0];
+
+    // Show lists with other rep maxes
+    let maxList = document.createElement("ul");
+    
+    for (let i = 1; i < maxReps.length; i++){
+        let maxListItem = document.createElement("li");
+        maxListItem.textContent = maxReps[i][1] + " \u00D7 " + maxReps[i][0];
+        maxList.appendChild(maxListItem);
+        console.log(maxList);
+    }
+
+    console.log(maxList);
+
+    visualizer.appendChild(maxHeading)
+    visualizer.appendChild(maxList);
 }
