@@ -1,7 +1,68 @@
-let enteredWeight = 380;
-let calcDisplay = document.querySelector("#calc-display");
-let visualizer = document.querySelector("#visualizer");
-let calcButton = document.querySelectorAll(".keypad button, .display button");
+// Calculator module
+const calculator = (() => {
+    let _output = "";
+    let _calcDisplay = document.querySelector("#calc-display");
+    let _visualizer = document.querySelector("#visualizer");
+    let _calcButton = document.querySelectorAll(".keypad button, .display button");
+
+    function _renderDisplay(_displayValue){
+        _calcDisplay.textContent = _displayValue;
+        const _unit = document.createElement("span");
+        _unit.setAttribute("id", "unit");
+        _unit.textContent = "lbs.";
+        _calcDisplay.appendChild(_unit);
+    }
+
+    function outputInit(_initValue){
+        _output = _initValue.toString();
+        _renderDisplay(_initValue);
+    }
+
+    function _bindKeypad(){
+        _calcButton.forEach(item => {
+            item.addEventListener("click", function(){
+                updateOutput(this.dataset.buttonFunction, this.dataset.buttonNumber)
+            })
+        });
+    }
+
+    function updateOutput(_function, _number){
+
+        _renderDisplay(_validateOutput(output));
+    }
+
+    function _validateOutput(_number){
+        let output = _number;
+        return output;
+    }
+            
+    return {
+        outputInit,
+        updateOutput,
+    };
+})();
+
+// Plate visualizer module
+const plateVisualizer = (() => {
+    let _increments = [45, 25, 10, 5, 2.5];
+    let _barWeight = 45;
+    let _maxWeight = 1500;
+
+    calculator.outputInit(380);
+
+
+})();
+
+
+/******************
+*
+*
+*
+* Old code to refactor
+*
+*
+*******************/
+
 
 // Calculator functions
 calcButton.forEach(item => {
@@ -45,16 +106,6 @@ calcButton.forEach(item => {
     });
 });
 
-
-function updateCalcDisplay(weight){
-    let unitMarker = document.createElement("span");
-    unitMarker.setAttribute("id", "unit");
-    unitMarker.textContent = "lbs.";
-
-    calcDisplay.textContent = weight;
-    calcDisplay.appendChild(unitMarker);
-}
-
 function removeChildNodes(element){
     while (element.firstChild){
         element.removeChild(element.firstChild);
@@ -62,15 +113,7 @@ function removeChildNodes(element){
 }
 
 
-
-
-
 /* Plate visualizer functions */
-
-
-let increments = [45, 25, 10, 5, 2.5];
-let barWeight = 45;
-let maxWeight = 1500;
 
 // Set up display at start
 updateCalcDisplay(enteredWeight);
@@ -120,11 +163,6 @@ function calculatePlates(weight){
         if (weight > 0) platesNeeded.push(["custom", Math.round(weight * 100) / 100]);
         return platesNeeded;
 }
-
-
-
-
-
 
 /* One-Rep Max Calculator */
 
