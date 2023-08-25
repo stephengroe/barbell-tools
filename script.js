@@ -1,3 +1,14 @@
+// Weight module
+
+const weight = {
+    initialWeight: 380,
+    currentWeight: 0,
+    initializeWeight() {
+
+    },
+}
+
+
 // Display module
 
 const display = {
@@ -23,15 +34,8 @@ const display = {
         this._renderDisplay(_output);
     }
 
-    
-
 
 }
-
-
-
-
-
 
 // Calculator module
 const calculator = {
@@ -71,7 +75,6 @@ const plateVisualizer = () => {
     let _maxWeight = 1500;
 
     calculator.initCalculator(380);
-
 
 };
 
