@@ -67,6 +67,7 @@ const keypad = {
 
 const display = {
     unit: "lbs.",
+    mode: "visualizer",
 
     renderDisplay: function(displayValue) {
         let weightDisplay = document.querySelector("[data-display='weight']");
@@ -86,68 +87,64 @@ const display = {
     },
 
     renderVisualizer: function(weight) {
-        this.clearVisualizerDisplay();
+        let visualizer = document.querySelector("[data-display='visualizer']");
+        this.clearVisualizerDisplay(visualizer);
+        plateVisualizer.renderDisplay(weight);
     },
 
-    clearVisualizerDisplay: function() {
-        let visualizer = document.querySelector("[data-display='visualizer']");
-        while (visualizer.firstChild){
-            visualizer.removeChild(visualizer.firstChild);
+    clearVisualizerDisplay: function(element) {
+        while (element.firstChild){
+            element.removeChild(visualizer.firstChild);
         }
     },
 }
 
 const plateVisualizer = {
-// - Find out which plates to use
-// - Determine if custom plates needed
-// - Generate DOM container
-// - Generate DOM plates
-// - renderVisualizer();
-// let increments = [45, 25, 10, 5, 2.5];
-// function updateVisualizer(weight) {
-//     removeChildNodes(visualizer);
-//     if (weight <= barWeight) return;
-//     const platesNeeded = calculatePlates(weight);
+    increments: [45, 25, 10, 5, 2.5],
+    barWeight: 45,
 
-//     for (let increment of platesNeeded){
-//         if (increment[1] === 0) {continue;}
+    renderDisplay: function(weight) {
+        let platesNeeded = this.getWeightIncrements(weight);
+        for (let increment of platesNeeded){
+            if (increment[1] === 0) {continue;}
 
-//         // Create container
-//         let incrementContainer = document.createElement("div");
-//         let plateIconClass = "plate-" + increment[0].toString().replace(".","-");
-//         incrementContainer.classList.add("incrementContainer", plateIconClass);
+            // Create container
+            let incrementContainer = document.createElement("div");
+            let plateIconClass = "plate-" + increment[0].toString().replace(".","-");
+            incrementContainer.classList.add("incrementContainer", plateIconClass);
 
-//         // Create text
-//         let description = incrementContainer.appendChild(document.createElement("h3"));
-//         description.textContent = increment[1] + " \u00D7 " + increment[0];
+            // Create text
+            let description = incrementContainer.appendChild(document.createElement("h3"));
+            description.textContent = increment[1] + " \u00D7 " + increment[0];
 
-//         // Create plates container
-//         let plateContainer = incrementContainer.appendChild(document.createElement("div"));
-//         plateContainer.classList.add("plateContainer");
+            // Create plates container
+            let plateContainer = incrementContainer.appendChild(document.createElement("div"));
+            plateContainer.classList.add("plateContainer");
 
-//         // Create each plate
-//         for (i=0; i<increment[1]; i++){
-//             plateContainer.appendChild(document.createElement("div"));
-//         }
+            // Create each plate
+            for (i=0; i<increment[1]; i++){
+                plateContainer.appendChild(document.createElement("div"));
+            }
 
-//         visualizer.appendChild(incrementContainer);
-//     }
-// }
+            visualizer.appendChild(incrementContainer);
+        }
+    },
 
-// // Generate nested array with plates necessary
-// function calculatePlates(weight){
-//         weight = (weight - barWeight) / 2; // Reduce to just one side of bar
-//         let platesNeeded = increments.map((increment) => {
-//             const plates = Math.floor(weight / increment);
-//             weight %= increment;
-//             return [increment, plates];
-//         });
-    
-//         // Add custom weight increment as a decimal
-//         if (weight > 0) platesNeeded.push(["custom", Math.round(weight * 100) / 100]);
-//         return platesNeeded;
-// }
+    getWeightIncrements: function(weight) {
+        if (weight <= this.barWeight) return [];
+        weight = (weight - this.barWeight) / 2;
+        let platesNeeded = this.increments.map(increment => {
+            const plates = Math.floor(weight / increment);
+            weight %= increment;
+            return [increment, plates];
+        });
 
+        if (weight > 0) {
+            platesNeeded.push(["custom", Math.round(weight * 100) / 100]);
+        }
+
+        return platesNeeded;
+    },
 }
 
 const oneRepMax = {
