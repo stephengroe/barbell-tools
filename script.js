@@ -3,10 +3,124 @@
 const weight = {
     initialWeight: 380,
     currentWeight: 0,
-    initializeWeight() {
+    maxWeight: 1500,
+    minWeight: 0,
 
+    initializeWeight: function() {
+        currentWeight = this.getValidWeight(initialWeight);
+        // display.renderDisplay(initialWeight);
+        // display.renderVisualizer(initialWeight);
+    },
+
+    updateWeight: function(buttonFunction, buttonValue){
+        let newWeight = calcFunction[buttonFunction](currentWeight, +buttonValue);
+        newWeight = this.getValidWeight(newWeight)
+        // display.renderDisplay(newWeight);
+        // display.renderVisualizer(newWeight);
+    },
+
+    getValidWeight: function(enteredWeight){
+        if (enteredWeight > this.maxWeight || enteredWeight < this.minWeight) {
+            display.alertWeightError();
+            return this.currentWeight;
+        } else {
+            currentWeight = enteredWeight;
+            return enteredWeight;
+        }
     },
 }
+
+// Key actions
+const calcFunction = {
+    append: function(weight, value) {
+        return Number(weight.toString() + value);
+    },
+
+    add: function(weight, value) {
+        return weight + value;
+    },
+
+    subtract: function(weight, value) {
+        return weight - value;
+    },
+
+    delete: function(weight, value) {
+        const result = weight.toString().slice(0, -value);
+        return Number(result);
+    },
+
+    clear: function(_, _) {
+        return 0;
+    },
+}
+
+/*
+const keypad = {
+- initializeKeypad()
+    - Bind keys to event listeners
+    - Trigger updateWeight(keyAction, keyValue)
+}
+
+const display = {
+- unit:
+- renderWeightDisplay(weight)
+    - Convert to string
+    - Add unit signifier at the end
+    - Push to DOM
+- renderVisualizerDisplay(DOM elements)
+    - clearChildElements(parent)
+- clearChildNodes(parent)
+    - Delete nodes
+}
+
+const visualizer = {
+
+}
+
+const plateVisualizer = {
+- activeIncrements:
+- calculatePlates(weight)
+    - Calculate which increments to use
+    - Return nested array with plates and amounts
+- 
+
+
+
+Visualizer
+- Find out which plates to use
+- Determine if custom plates needed
+- Generate DOM container
+- Generate DOM plates
+- renderVisualizer();
+
+}
+
+
+
+
+const oneRepMax = {
+- formula:
+
+}
+
+const strengthStandards = {
+- standards:
+
+}
+
+
+
+initializeKeypad();
+initializeWeight();
+
+
+
+*/
+
+
+
+
+
 
 
 // Display module
@@ -32,15 +146,21 @@ const display = {
     setDisplay: function(output){
         _output = output;
         this._renderDisplay(_output);
-    }
+    },
 
+    alertWeightError: function(){
+        calcDisplay.classList.add("error");
+        setTimeout(() => {
+            calcDisplay.classList.remove("error");
+        }, "150");
 
+    },
 }
 
 // Calculator module
 const calculator = {
 
-    _bindKeypad(): {
+    _bindKeypad: function() {
         let _calcButton = document.querySelectorAll(".keypad button, .display button");
         _calcButton.forEach(item => {
             item.addEventListener("click", function(){
@@ -49,22 +169,17 @@ const calculator = {
         });
     },
 
-    updateOutput(_function, _number): {
+    updateOutput: function(_function, _number) {
         console.log(_function, _number);
         _renderDisplay(_validateOutput(_output));
     },
 
-    _validateOutput(_number): {
+    _validateOutput: function(_number) {
         return output;
-    }
-            
-    return {
-        initCalculator,
-        updateOutput,
-    };
+    },
 };
 
-calculator.initCalculator(380);
+calculator.initDisplay(380);
 
 
 // Plate visualizer module
