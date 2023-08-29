@@ -1,22 +1,22 @@
 // Weight module
 
 const weight = {
-    initialWeight: 380,
     currentWeight: 0,
     maxWeight: 1500,
     minWeight: 0,
 
-    initializeWeight: function() {
-        currentWeight = this.getValidWeight(initialWeight);
-        // display.renderDisplay(initialWeight);
-        // display.renderVisualizer(initialWeight);
+    initializeWeight: function(initialWeight) {
+        this.currentWeight = this.getValidWeight(initialWeight);
+        display.renderDisplay(initialWeight);
+        display.renderVisualizer(initialWeight);
     },
 
     updateWeight: function(buttonFunction, buttonValue){
-        let newWeight = calcFunction[buttonFunction](currentWeight, +buttonValue);
+        let newWeight = calcFunction[buttonFunction](this.currentWeight, +buttonValue);
         newWeight = this.getValidWeight(newWeight)
-        // display.renderDisplay(newWeight);
-        // display.renderVisualizer(newWeight);
+        this.currentWeight = newWeight;
+        display.renderDisplay(newWeight);
+        display.renderVisualizer(newWeight);
     },
 
     getValidWeight: function(enteredWeight){
@@ -24,7 +24,7 @@ const weight = {
             display.alertWeightError();
             return this.currentWeight;
         } else {
-            currentWeight = enteredWeight;
+            this.currentWeight = enteredWeight;
             return enteredWeight;
         }
     },
@@ -54,212 +54,56 @@ const calcFunction = {
     },
 }
 
-/*
 const keypad = {
-- initializeKeypad()
-    - Bind keys to event listeners
-    - Trigger updateWeight(keyAction, keyValue)
-}
-
-const display = {
-- unit:
-- renderWeightDisplay(weight)
-    - Convert to string
-    - Add unit signifier at the end
-    - Push to DOM
-- renderVisualizerDisplay(DOM elements)
-    - clearChildElements(parent)
-- clearChildNodes(parent)
-    - Delete nodes
-}
-
-const visualizer = {
-
-}
-
-const plateVisualizer = {
-- activeIncrements:
-- calculatePlates(weight)
-    - Calculate which increments to use
-    - Return nested array with plates and amounts
-- 
-
-
-
-Visualizer
-- Find out which plates to use
-- Determine if custom plates needed
-- Generate DOM container
-- Generate DOM plates
-- renderVisualizer();
-
-}
-
-
-
-
-const oneRepMax = {
-- formula:
-
-}
-
-const strengthStandards = {
-- standards:
-
-}
-
-
-
-initializeKeypad();
-initializeWeight();
-
-
-
-*/
-
-
-
-
-
-
-
-// Display module
-
-const display = {
-    _output: 0,
-
-    initDisplay: function(_initValue) {
-        this._output = _initValue;
-        _renderDisplay(_initValue);
-        _bindKeypad();
-    },
-
-    _renderDisplay: function(_displayValue) {
-        let _calcDisplay = document.querySelector("#calc-display");
-        _calcDisplay.textContent = _displayValue;
-        const _unit = document.createElement("span");
-        _unit.setAttribute("id", "unit");
-        _unit.textContent = "lbs.";
-        _calcDisplay.appendChild(_unit);
-    },
-
-    setDisplay: function(output){
-        _output = output;
-        this._renderDisplay(_output);
-    },
-
-    alertWeightError: function(){
-        calcDisplay.classList.add("error");
-        setTimeout(() => {
-            calcDisplay.classList.remove("error");
-        }, "150");
-
-    },
-}
-
-// Calculator module
-const calculator = {
-
-    _bindKeypad: function() {
-        let _calcButton = document.querySelectorAll(".keypad button, .display button");
-        _calcButton.forEach(item => {
+    bindKeypad: function() {
+        let calcButton = document.querySelectorAll("[data-button-function]");
+        calcButton.forEach(item => {
             item.addEventListener("click", function(){
-                updateOutput(this.dataset.buttonFunction, this.dataset.buttonNumber)
+                weight.updateWeight(this.dataset.buttonFunction, this.dataset.buttonValue)
             })
         });
     },
+}
 
-    updateOutput: function(_function, _number) {
-        console.log(_function, _number);
-        _renderDisplay(_validateOutput(_output));
+const display = {
+    unit: "lbs.",
+
+    renderDisplay: function(displayValue) {
+        let weightDisplay = document.querySelector("[data-display='weight']");
+        weightDisplay.textContent = displayValue.toString();
+        const unit = document.createElement("span")
+        unit.textContent = this.unit;
+        unit.setAttribute("id", "unit");
+        weightDisplay.appendChild(unit);
     },
 
-    _validateOutput: function(_number) {
-        return output;
+    alertWeightError: function(){
+        let weightDisplay = document.querySelector("[data-display='weight']");
+        weightDisplay.classList.add("error");
+        setTimeout(() => {
+            weightDisplay.classList.remove("error");
+        }, "150");
     },
-};
 
-calculator.initDisplay(380);
+    renderVisualizer: function(weight) {
+        this.clearVisualizerDisplay();
+    },
 
+    clearVisualizerDisplay: function() {
+        let visualizer = document.querySelector("[data-display='visualizer']");
+        while (visualizer.firstChild){
+            visualizer.removeChild(visualizer.firstChild);
+        }
+    },
+}
 
-// Plate visualizer module
-const plateVisualizer = () => {
-    let _visualizer = document.querySelector("#visualizer");
-    let _increments = [45, 25, 10, 5, 2.5];
-    let _barWeight = 45;
-    let _maxWeight = 1500;
-
-    calculator.initCalculator(380);
-
-};
-
-
-/******************
-*
-*
-*
-* Old code to refactor
-*
-*
-*******************/
-
-
-// // Calculator functions
-// calcButton.forEach(item => {
-//     item.addEventListener("click", function(){
-//         const buttonFunction = this.dataset.buttonFunction;
-//         const buttonNumber = this.dataset.buttonNumber;
-//         let updateWeight = enteredWeight.toString();
-
-//         switch (buttonFunction){
-//             case "delete":
-//                 updateWeight = updateWeight.slice(0, -1);
-//                 break;
-//             case "clear":
-//                 updateWeight = "0";
-//                 break;
-//             case "bump":
-//                 console.log(buttonNumber);
-//                 updateWeight = +updateWeight + +buttonNumber;
-//                 updateWeight = updateWeight.toString();
-//                 break;
-//             case "key":
-//                 if (updateWeight === "0") updateWeight = buttonNumber;
-//                 else updateWeight += buttonNumber;
-//         }
-
-//         updateWeight = +updateWeight;
-//         if (updateWeight === "" || updateWeight <= 0) {
-//             enteredWeight = 0;
-//         } else if (updateWeight >= maxWeight ) {
-//             calcDisplay.classList.add("error");
-//             setTimeout(() => {
-//                 calcDisplay.classList.remove("error");
-//               }, "150");
-//             return;
-//         } else {
-//             enteredWeight = updateWeight;
-//         }
-
-//         updateCalcDisplay(enteredWeight);
-//         updateVisualizer(enteredWeight);
-//     });
-// });
-
-// function removeChildNodes(element){
-//     while (element.firstChild){
-//         element.removeChild(element.firstChild);
-//     }
-// }
-
-
-/* Plate visualizer functions */
-
-// Set up display at start
-// updateCalcDisplay(enteredWeight);
-// updateVisualizer(enteredWeight);
-
-
+const plateVisualizer = {
+// - Find out which plates to use
+// - Determine if custom plates needed
+// - Generate DOM container
+// - Generate DOM plates
+// - renderVisualizer();
+// let increments = [45, 25, 10, 5, 2.5];
 // function updateVisualizer(weight) {
 //     removeChildNodes(visualizer);
 //     if (weight <= barWeight) return;
@@ -304,10 +148,9 @@ const plateVisualizer = () => {
 //         return platesNeeded;
 // }
 
-// /* One-Rep Max Calculator */
+}
 
-// // Calculate max reps
-
+const oneRepMax = {
 // function getMaxReps(weight, reps){
 //     let maxReps = [];
 //     let oneRepMax = weight * (36 / (37 - reps)); // Brzycki formula
@@ -319,8 +162,6 @@ const plateVisualizer = () => {
 //     }
 //     return maxReps;
 // }
-
-// // Update visualizer
 
 // function updateRepVizualizer(maxReps) {
 //     removeChildNodes(visualizer);
@@ -341,3 +182,13 @@ const plateVisualizer = () => {
 //     visualizer.appendChild(maxHeading)
 //     visualizer.appendChild(maxList);
 // }
+}
+
+const strengthStandards = {
+
+}
+
+// Initialize
+
+weight.initializeWeight(380);
+keypad.bindKeypad();
