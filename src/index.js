@@ -1,3 +1,5 @@
+import './style.css';
+
 // Weight module
 
 const weight = {
@@ -49,7 +51,7 @@ const calcFunction = {
         return Number(result);
     },
 
-    clear: function(_, _) {
+    clear: function(unused01, unused02) {
         return 0;
     },
 }
