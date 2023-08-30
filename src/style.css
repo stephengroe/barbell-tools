@@ -156,14 +156,14 @@ body {
   padding-bottom: 25px;
 }
 
-.header {
+#header {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 1rem;
 }
 
-.header a {
+#header a {
   background-color: var(--lightgrey);
   border-radius: 100%;
   display: block;
@@ -171,7 +171,7 @@ body {
   height: 45px;
 }
 
-.header h1 {
+#header h1 {
   font-weight: 200;
   font-size: 1.25rem;
   color: var(--white);
