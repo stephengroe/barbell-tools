@@ -11,7 +11,7 @@ const weight = {
         display.renderVisualizer(initialWeight);
     },
 
-    updateWeight: function(buttonFunction, buttonValue){
+    updateWeight: function(buttonFunction, buttonValue) {
         let newWeight = calcFunction[buttonFunction](this.currentWeight, +buttonValue);
         newWeight = this.getValidWeight(newWeight)
         this.currentWeight = newWeight;
@@ -19,7 +19,7 @@ const weight = {
         display.renderVisualizer(newWeight);
     },
 
-    getValidWeight: function(enteredWeight){
+    getValidWeight: function(enteredWeight) {
         if (enteredWeight > this.maxWeight || enteredWeight < this.minWeight) {
             display.alertWeightError();
             return this.currentWeight;
@@ -89,7 +89,7 @@ const display = {
     renderVisualizer: function(weight) {
         let visualizer = document.querySelector("[data-display='visualizer']");
         this.clearVisualizerDisplay(visualizer);
-        plateVisualizer.renderDisplay(weight);
+        oneRepMax.renderDisplay(weight);
     },
 
     clearVisualizerDisplay: function(element) {
@@ -148,44 +148,162 @@ const plateVisualizer = {
 }
 
 const oneRepMax = {
-// function getMaxReps(weight, reps){
-//     let maxReps = [];
-//     let oneRepMax = weight * (36 / (37 - reps)); // Brzycki formula
-    
-//     for (let i = 1; i <= 10; i++){
-//         let estimatedWeight;
-//         estimatedWeight = Math.floor((37 - i) * oneRepMax / 36);
-//         maxReps.push([estimatedWeight, i])
-//     }
-//     return maxReps;
-// }
+    startWeight: 225,
+    startReps: 5,
 
-// function updateRepVizualizer(maxReps) {
-//     removeChildNodes(visualizer);
+    calculateMaxReps: function(weight, reps) {
+        let maxReps = [];
+        let oneRepMax = weight * (36 / (37 - reps)); // Brzycki formula
+        
+        for (let i = 1; i <= 10; i++){
+            let estimatedWeight;
+            estimatedWeight = Math.floor((37 - i) * oneRepMax / 36);
+            maxReps.push([estimatedWeight, i])
+        }
+        return maxReps;
+    },
 
-//     // Show 1-rep max
-//     let maxHeading = document.createElement("h3");
-//     maxHeading.textContent = maxReps[0][1] + " \u00D7 " + maxReps[0][0];
+    renderDisplay: function(weight, reps) {
+        let maxReps = this.calculateMaxReps(weight, reps);
 
-//     // Show lists with other rep maxes
-//     let maxList = document.createElement("ul");
-    
-//     for (let i = 1; i < maxReps.length; i++){
-//         let maxListItem = document.createElement("li");
-//         maxListItem.textContent = maxReps[i][1] + " \u00D7 " + maxReps[i][0];
-//         maxList.appendChild(maxListItem);
-//     }
+        // Show 1-rep max
+        let maxHeading = document.createElement("h3");
+        maxHeading.textContent = maxReps[0][1] + " \u00D7 " + maxReps[0][0];
 
-//     visualizer.appendChild(maxHeading)
-//     visualizer.appendChild(maxList);
-// }
+        // Show lists with other rep maxes
+        let maxList = document.createElement("ul");
+        
+        for (let i = 1; i < maxReps.length; i++){
+            let maxListItem = document.createElement("li");
+            maxListItem.textContent = maxReps[i][1] + " \u00D7 " + maxReps[i][0];
+            maxList.appendChild(maxListItem);
+        }
+
+        visualizer.appendChild(maxHeading)
+        visualizer.appendChild(maxList);
+    }
+}
+
+const reps = {
+    currentReps: 0,
+    maxReps: 10,
+    minReps: 0,
+
+    initializeReps: function(initialReps) {
+        this.currentReps = this.getValidWeight(initialReps);
+        display.renderDisplay(initialReps);
+        display.renderVisualizer(initialReps);
+    },
+
+    updateWeight: function(buttonFunction, buttonValue){
+        let newWeight = calcFunction[buttonFunction](this.currentWeight, +buttonValue);
+        newWeight = this.getValidWeight(newWeight)
+        this.currentWeight = newWeight;
+        display.renderDisplay(newWeight);
+        display.renderVisualizer(newWeight);
+    },
+
+    getValidWeight: function(enteredWeight){
+        if (enteredWeight > this.maxWeight || enteredWeight < this.minWeight) {
+            display.alertWeightError();
+            return this.currentWeight;
+        } else {
+            this.currentWeight = enteredWeight;
+            return enteredWeight;
+        }
+    },
 }
 
 const strengthStandards = {
+
 
 }
 
 // Initialize
 
 weight.initializeWeight(380);
+reps.initializeReps(5);
 keypad.bindKeypad();
+
+
+
+
+const standards = {
+    men: {
+        114: {
+            'press': [53, 72, 90, 107, 129],
+            'bench press': [84, 107, 130, 179, 222],
+            'squat': [78, 144, 174, 240, 320],
+            'deadlift': [97, 179, 204, 299, 387],
+        },
+        123: {
+            'press': [57, 78, 98, 116, 141],
+            'bench press': [91, 116, 142, 194, 242],
+            'squat': [84, 155, 190, 259, 346],
+            'deadlift': [105, 194, 222, 320, 414],
+        },
+        132: {
+            'press': [61, 84, 105, 125, 151],
+            'bench press': [98, 125, 153, 208, 260],
+            'squat': [91, 168, 205, 278, 369],
+            'deadlift': [113, 209, 239, 342, 438],
+        },
+        148: {
+            'press': [69, 94, 119, 140, 169],
+            'bench press': [109, 140, 172, 234, 291],
+            'squat': [101, 188, 230, 313, 410],
+            'deadlift': [126, 234, 269, 380, 482],
+        },
+        165: {
+            'press': [75, 102, 129, 153, 186],
+            'bench press': [119, 152, 187, 255, 319],
+            'squat': [110, 204, 250, 342, 445],
+            'deadlift': [137, 254, 293, 411, 518],
+        },
+        181: {
+            'press': [81, 110, 138, 164, 218],
+            'bench press': [128, 164, 201, 275, 343],
+            'squat': [119, 220, 269, 367, 479],
+            'deadlift': [148, 274, 315, 438, 548],
+        },
+        198: {
+            'press': [85, 116, 146, 173, 234],
+            'bench press': [135, 173, 213, 289, 362],
+            'squat': [125, 232, 285, 387, 504],
+            'deadlift': [156, 289, 333, 457, 567],
+        },
+        220: {
+            'press': [89, 122, 155, 183, 255],
+            'bench press': [142, 183, 225, 306, 381],
+            'squat': [132, 244, 301, 409, 532],
+            'deadlift': [164, 305, 351, 479, 586],
+        },
+        242: {
+            'press': [93, 127, 159, 189, 264],
+            'bench press': [149, 190, 232, 316, 395],
+            'squat': [137, 255, 311, 423, 551],
+            'deadlift': [172, 318, 363, 490, 596],
+        },
+        275: {
+            'press': [96, 131, 164, 194, 272],
+            'bench press': [153, 196, 239, 325, 407],
+            'squat': [141, 261, 319, 435, 567],
+            'deadlift': [176, 326, 373, 499, 602],
+        },
+        319: {
+            'press': [98, 133, 167, 199, 278],
+            'bench press': [156, 199, 244, 333, 416],
+            'squat': [144, 267, 326, 445, 580],
+            'deadlift': [180, 333, 381, 506, 608],
+        },
+        320: {
+            'press': [100, 136, 171, 203, 284],
+            'bench press': [159, 204, 248, 340, 425],
+            'squat': [147, 272, 332, 454, 593],
+            'deadlift': [183, 340, 388, 512, 617],
+        },
+    },
+    women: {
+
+    },
+}
