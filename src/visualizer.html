@@ -1,34 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Plate Visualizer</title>
     <script src="./script.js" defer></script>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./visualizer.css">
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./visualizer.css" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter');
-      </style>
-</head>
-<body>
+      @import url("https://fonts.googleapis.com/css2?family=Inter");
+    </style>
+  </head>
+  <body>
     <div class="header">
-        <a href="index.html">Home</a>
-        <h1>Plate Visualizer</h1>
-        <a href="">Settings</a>
+      <a href="index.html">Home</a>
+      <h1>Plate Visualizer</h1>
+      <a href="">Settings</a>
     </div>
 
     <div id="wrapper">
+      <div
+        id="visualizer"
+        class="card"
+        data-display="visualizer"
+        data-display-mode="plateVisualizer"
+      ></div>
 
-    <div id="visualizer" class="card" data-display="visualizer" data-display-mode="plateVisualizer"></div>
-
-    <div class="display card">
-        <button data-button-function="subtract" data-button-value="5">-5</button>
+      <div class="display card">
+        <button data-button-function="subtract" data-button-value="5">
+          -5
+        </button>
         <output data-display="weight"></output>
         <button data-button-function="add" data-button-value="5">+5</button>
-    </div>
+      </div>
 
-    <div class="keypad card">
+      <div class="keypad card">
         <button data-button-function="append" data-button-value="1">1</button>
         <button data-button-function="append" data-button-value="2">2</button>
         <button data-button-function="append" data-button-value="3">3</button>
@@ -41,10 +47,15 @@
         <button data-button-function="delete" data-button-value="1">⌫</button>
         <button data-button-function="append" data-button-value="0">0</button>
         <button data-button-function="clear" data-button-value="">Clear</button>
+      </div>
     </div>
 
-    </div>
-    
-    <p id="copyright">&copy; <script>document.write(new Date().getFullYear());</script> Stephen Roe</p>
-</body>
+    <p id="copyright">
+      &copy;
+      <script>
+        document.write(new Date().getFullYear());
+      </script>
+      Stephen Roe
+    </p>
+  </body>
 </html>

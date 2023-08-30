@@ -1,6 +1,7 @@
 # barbell.tools
 
 ## Overview
+
 This is a simple set of calculators for barbell lifts. It's hosted at [barbell.tools](https://barbell.tools/).
 
 It currently includes the following tools:
