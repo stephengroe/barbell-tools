@@ -1,3 +1,4 @@
+import {header, footer} from "./index.js";
 
 // Weight module
 
@@ -96,13 +97,7 @@ const display = {
     const visualizer = document.querySelector("[data-display='visualizer']");
     this.clearVisualizerDisplay(visualizer);
     oneRepMax.renderDisplay(weight);
-  },
-
-  clearVisualizerDisplay(element) {
-    while (element.firstChild) {
-      element.removeChild(visualizer.firstChild);
-    }
-  },
+  }
 };
 
 const plateVisualizer = {
