@@ -2,15 +2,10 @@ import createKeypad from "./calculator";
 
 const plateVisualizer = {
   initialize() {
-    console.log("Done");
-    const visualizerElements = [];
-
-    visualizerElements.push(createKeypad(weight.updateWeight));
-
-
-
-
-    return ["Plate Visualizer!"];
+    const div = document.createElement("div");
+    div.textContent = "Visualizer!";
+    div.setAttribute("class", "card");
+    return [div];
   },
 };
 

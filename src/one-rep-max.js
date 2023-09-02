@@ -1,6 +1,9 @@
 const oneRepMax = {
   initialize() {
-    return ["Hey there!"];
+    const div = document.createElement("div");
+    div.textContent = "One rep max!";
+    div.setAttribute("class", "card");
+    return [div];
   },
 
   startWeight: 225,

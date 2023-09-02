@@ -1,8 +1,9 @@
 const strengthStandards = {
   initialize() {
-    const header = document.createElement("h2");
-    header.textContent = "Strength standards!";
-    return [header];
+    const div = document.createElement("div");
+    div.textContent = "Standards!";
+    div.setAttribute("class", "card");
+    return [div];
   },
 
   updateStandards(bodyWeight, gender) {
