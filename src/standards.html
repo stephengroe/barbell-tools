@@ -1,35 +1,38 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Strength Standards</title>
     <script src="./script.js" defer></script>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter');
-      </style>
-</head>
-<body>
-  <div class="header">
-    <a href="index.html">Home</a>
-    <h1>Strength Standards</h1>
-    <a href="">Settings</a>
-  </div>
-
-  <div id="wrapper">
-
-    <div id="visualizer" class="card"></div>
-
-    <div class="display card">
-        <output id="calc-display"></output>
-        <div>
-          <button data-button-function="gender" data-button-number="male">M</button>
-        <button data-button-function="gender" data-button-number="female">F</button>
-        </div>
+      @import url("https://fonts.googleapis.com/css2?family=Inter");
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <a href="index.html">Home</a>
+      <h1>Strength Standards</h1>
+      <a href="">Settings</a>
     </div>
 
-    <div class="keypad card">
+    <div id="wrapper">
+      <div id="visualizer" class="card"></div>
+
+      <div class="display card">
+        <output id="calc-display"></output>
+        <div>
+          <button data-button-function="gender" data-button-number="male">
+            M
+          </button>
+          <button data-button-function="gender" data-button-number="female">
+            F
+          </button>
+        </div>
+      </div>
+
+      <div class="keypad card">
         <button data-button-function="key" data-button-number="1">1</button>
         <button data-button-function="key" data-button-number="2">2</button>
         <button data-button-function="key" data-button-number="3">3</button>
@@ -42,11 +45,15 @@
         <button data-button-function="delete">⌫</button>
         <button data-button-function="key" data-button-number="0">0</button>
         <button data-button-function="clear">Clear</button>
+      </div>
     </div>
 
-    </div>
-    
-    <p id="copyright">&copy; <script>document.write(new Date().getFullYear());</script> Stephen Roe</p>
-
-</body>
+    <p id="copyright">
+      &copy;
+      <script>
+        document.write(new Date().getFullYear());
+      </script>
+      Stephen Roe
+    </p>
+  </body>
 </html>
