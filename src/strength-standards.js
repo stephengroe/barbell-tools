@@ -5,6 +5,11 @@ const strengthStandards = {
     return [header];
   },
 
+  updateStandards(bodyWeight, gender) {
+    const newStandards = this.getStandards(bodyWeight, gender);
+    document.querySelector("body").append(this.renderStandards(newStandards));
+  },
+
   getStandards(bodyWeight, gender) {
     // Get weight class closest to but no lower than bodyweight
     const weightClass = Object.keys(this.standards[gender])
@@ -14,7 +19,46 @@ const strengthStandards = {
         }
         return current;
       });
-    return this.standards[gender][weightClass];
+    return [gender, weightClass, this.standards[gender][weightClass]];
+  },
+
+  renderStandards([gender, weightClass, standardsList]) {
+    const div = document.createElement("div");
+    const heading = document.createElement("h2");
+    heading.textContent = `Standards for adult ${gender} (${weightClass}lbs. weight class)`;
+    div.append(heading);
+
+    const table = document.createElement("table");
+
+    // Create header rows with levels
+    const levels = ["", "I.", "II.", "III.", "IV.", "V."];
+    const headerRow = document.createElement("tr");
+    levels.forEach(level => {
+      const levelCell = document.createElement("th");
+      levelCell.textContent = level;
+      headerRow.append(levelCell);
+    });
+    table.append(headerRow);
+    
+    // Create row for each exercise
+    Object.entries(standardsList).forEach(exercise => {
+      const [title, weights] = exercise;
+      const weightRow = document.createElement("tr");
+      const titleCell = document.createElement("td");
+      titleCell.textContent = title.charAt(0).toUpperCase() + title.slice(1);
+      weightRow.append(titleCell);
+
+      weights.forEach(weight => {
+        const weightCell = document.createElement("td");
+        weightCell.textContent = weight;
+        weightRow.append(weightCell);
+      });
+      table.append(weightRow);
+    });
+
+    // Add it all together and return it
+    div.append(table);
+    return div;
   },
 
   standards: {
@@ -157,4 +201,4 @@ const strengthStandards = {
   },
 };
 
-// export default strengthStandards;
+export default strengthStandards;
