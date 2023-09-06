@@ -34,7 +34,7 @@ const calculator = {
     }
   },
 
-  createKeypad(triggeredFunction, numberToEdit) {
+  createKeypad() {
     const keypadDiv = document.createElement("div");
     keypadDiv.setAttribute("class", "keypad card");
 
@@ -45,23 +45,9 @@ const calculator = {
       keyButton.dataset.buttonValue = key.value;
       keyButton.textContent = key.label;
 
-      // Bind listener event
-      keyButton.addEventListener(
-        "click",
-        () => {
-          triggeredFunction(
-            this.calculateFromButton(
-              numberToEdit,
-              keyButton.dataset.buttonAction,
-              keyButton.dataset.buttonValue
-            )
-          )
-        }
-      );
-
       keypadDiv.appendChild(keyButton);
-      
     });
+
     return keypadDiv;
   },
 }

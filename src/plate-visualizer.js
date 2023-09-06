@@ -20,7 +20,7 @@ const plateVisualizer = {
 
     const minusButton = document.createElement("button");
     minusButton.setAttribute("class", "accent-button");
-    minusButton.dataset.buttonFunction = "subtract";
+    minusButton.dataset.buttonAction = "subtract";
     minusButton.dataset.buttonValue = 5;
     minusButton.textContent = "-5";
 
@@ -29,16 +29,37 @@ const plateVisualizer = {
 
     const plusButton = document.createElement("button");
     plusButton.setAttribute("class", "accent-button");
-    plusButton.dataset.buttonFunction = "add";
+    plusButton.dataset.buttonAction = "add";
     plusButton.dataset.buttonValue = 5;
     plusButton.textContent = "+5";
 
     weightDisplay.append(minusButton, weightOutput, plusButton);
 
+    this.bindButtons(weightDisplay, "button");
+
     // Generate keypad
-    const keypad = calculator.createKeypad(this.updateWeight, this.currentWeight);
+    const keypad = calculator.createKeypad();
+    this.bindButtons(keypad, "button");
 
     return [resultDisplay, weightDisplay, keypad];
+  },
+
+  bindButtons(parent, selector) {
+    const elements = parent.querySelectorAll(selector);
+
+    elements.forEach(element => {
+      element.addEventListener(
+        "click",
+        () => {
+          this.updateWeight(calculator.calculateFromButton(
+            this.currentWeight,
+            element.dataset.buttonAction,
+            element.dataset.buttonValue
+            )
+          );
+        }
+      );
+    });
   },
 
   initialize() {
@@ -47,16 +68,11 @@ const plateVisualizer = {
     // this.renderVisualizer(this.currentWeight);
   },
 
-  updateWeight(buttonFunction, buttonValue) {
-    let newWeight = calculator.calculateFromButton(
-      plateVisualizer.currentWeight,
-      buttonFunction,
-      buttonValue
-    );
-    newWeight = plateVisualizer.getValidWeight(newWeight);
-    plateVisualizer.currentWeight = newWeight;
-    plateVisualizer.renderWeightOutput(newWeight);
-    // this.renderVisualizer(newWeight);
+  updateWeight(newWeight) {
+    const validWeight = this.getValidWeight(newWeight);
+    this.currentWeight = validWeight;
+    this.renderWeightOutput(validWeight);
+    // this.renderVisualizer(validWeight);
   },
 
   getValidWeight(enteredWeight) {
@@ -88,11 +104,13 @@ const plateVisualizer = {
 
 /*
 
+
   renderVisualizer(weight) {
     const visualizer = document.querySelector("[data-display='visualizer']");
     this.clearVisualizerDisplay(visualizer);
     oneRepMax.renderWeightOutput(weight);
   },
+
 };
 
 const oldPlateVisualizer = {
