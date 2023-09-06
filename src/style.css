@@ -166,6 +166,7 @@ body {
 #header a {
   background-color: var(--lightgrey);
   border-radius: 100%;
+  cursor: pointer;
 }
 
 #header a, #header .placeholder {
@@ -301,6 +302,10 @@ a.card {
   margin: 5px;
   color: var(--black);
   cursor: pointer;
+}
+
+.keypad button:active {
+  box-shadow: inset 0px 0px 10px 0px rgb(100 100 100 / 0.5);
 }
 
 #copyright {
