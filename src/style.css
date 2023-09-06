@@ -166,9 +166,12 @@ body {
 #header a {
   background-color: var(--lightgrey);
   border-radius: 100%;
-  display: block;
+}
+
+#header a, #header .placeholder {
   width: 45px;
   height: 45px;
+  display: block;
 }
 
 #header h1 {
@@ -181,6 +184,10 @@ body {
 #wrapper {
   margin: 1ch;
   max-width: 800px;
+}
+
+a.card {
+  cursor: pointer;
 }
 
 .card {

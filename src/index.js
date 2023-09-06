@@ -79,9 +79,9 @@ const content = {
       });
       headerDiv.prepend(home);
 
-      const settings = document.createElement("a");
-      settings.textContent = "Settings";
-      headerDiv.append(settings);
+      const placeholder = document.createElement("div");
+      placeholder.setAttribute("class", "placeholder");
+      headerDiv.append(placeholder);
     }
 
     return headerDiv;
