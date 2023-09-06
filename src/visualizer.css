@@ -1,9 +1,3 @@
-#visualizer {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-around;
-}
-
 .incrementContainer {
   display: flex;
   flex-flow: column;

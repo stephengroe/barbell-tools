@@ -55,7 +55,8 @@ const content = {
       anchor.appendChild(description);
 
       anchor.addEventListener("click", () => {
-        content.buildPage(tool.page.initialize(), tool.name, true);
+        content.buildPage(tool.page.generatePageElements(), tool.name, true);
+        tool.page.initialize();
       });
 
       domElements.push(anchor);

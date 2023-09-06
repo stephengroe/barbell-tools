@@ -1,4 +1,5 @@
-const keypad = [
+const calculator = {
+  keypad: [
   { label: "1", action: "append", value: 1 },
   { label: "2", action: "append", value: 2 },
   { label: "3", action: "append", value: 3 },
@@ -11,52 +12,58 @@ const keypad = [
   { label: "⌫", action: "delete", value: 1 },
   { label: "0", action: "append", value: 0 },
   { label: "Clear", action: "clear", value: 0 },
-];
+  ],
 
-function bindKeypad(element, f) {
-  element.addEventListener(
-    "click",
-    
-    f(this.dataset.buttonFunction, this.dataset.buttonValue),
-  );
+  // Key actions
+  calculateFromButton(originalNumber, keyAction, keyValue) {
+    switch (keyAction) {
+      case "append":
+        return Number(originalNumber.toString() + keyValue);
+      case "add":
+        return originalNumber + Number(keyValue);
+      case "subtract":
+        return originalNumber - Number(keyValue);
+      case "delete": {
+        const result = originalNumber.toString().slice(0, -Number(keyValue));
+        return Number(result);
+      }
+      case "clear":
+        return 0;
+      default:
+        return originalNumber;
+    }
+  },
+
+  createKeypad(triggeredFunction, numberToEdit) {
+    const keypadDiv = document.createElement("div");
+    keypadDiv.setAttribute("class", "keypad card");
+
+    this.keypad.forEach((key) => {
+      // Generate DOM element
+      const keyButton = document.createElement("button");
+      keyButton.dataset.buttonAction = key.action;
+      keyButton.dataset.buttonValue = key.value;
+      keyButton.textContent = key.label;
+
+      // Bind listener event
+      keyButton.addEventListener(
+        "click",
+        () => {
+          triggeredFunction(
+            this.calculateFromButton(
+              numberToEdit,
+              keyButton.dataset.buttonAction,
+              keyButton.dataset.buttonValue
+            )
+          )
+        }
+      );
+
+      keypadDiv.appendChild(keyButton);
+      
+    });
+    return keypadDiv;
+  },
 }
 
-// Key actions
-const calcFunction = {
-  append(weight, value) {
-    return Number(weight.toString() + value);
-  },
-
-  add(weight, value) {
-    return weight + value;
-  },
-
-  subtract(weight, value) {
-    return weight - value;
-  },
-
-  delete(weight, value) {
-    const result = weight.toString().slice(0, -value);
-    return Number(result);
-  },
-
-  clear(unused01, unused02) {
-    return 0;
-  },
-};
-
-export default function createKeypad(f) {
-  const keypadDiv = document.createElement("div");
-  keypadDiv.setAttribute("class", "keypad card");
-
-  keypad.forEach((key) => {
-    const keyButton = document.createElement("button");
-    keyButton.setAttribute("data-button-action", key.action);
-    keyButton.setAttribute("data-button-value", key.value);
-    keyButton.textContent = key.label;
-    bindKeypad(keyButton, f);
-
-    keypadDiv.appendChild(keyButton);
-  });
-  return keypadDiv;
-}
+export default calculator;

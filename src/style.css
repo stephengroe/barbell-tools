@@ -207,14 +207,17 @@ a.card {
   margin-bottom: 0.5em;
 }
 
-#visualizer {
+.result-display {
   text-align: center;
   padding-top: 35px;
   margin: 0 2ch 20px 2ch;
   min-height: 150px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
 }
 
-.display {
+.weight-display {
   display: flex;
   justify-content: space-around;
   margin-bottom: 15px;
@@ -256,13 +259,14 @@ a.card {
   }
 }
 
-.display #unit {
+.weight-display #unit {
   font-size: 1rem;
   text-transform: uppercase;
   display: block;
+  font-weight: normal;
 }
 
-.display button {
+.accent-button {
   font-size: 1.25rem;
   background-color: var(--accent);
   color: var(--white);
