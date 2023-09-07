@@ -7,6 +7,8 @@ const plateVisualizer = {
   minWeight: 0,
   unit: "lbs.",
   mode: "visualizer",
+  increments: [45, 25, 10, 5, 2.5],
+  barWeight: 45,
 
   generatePageElements() {
     // Generate visualizer display
@@ -65,14 +67,14 @@ const plateVisualizer = {
   initialize() {
     this.currentWeight = this.getValidWeight(this.currentWeight);
     this.renderWeightOutput(this.currentWeight);
-    // this.renderVisualizer(this.currentWeight);
+    this.renderVisualizer(this.currentWeight);
   },
 
   updateWeight(newWeight) {
     const validWeight = this.getValidWeight(newWeight);
     this.currentWeight = validWeight;
     this.renderWeightOutput(validWeight);
-    // this.renderVisualizer(validWeight);
+    this.renderVisualizer(validWeight);
   },
 
   getValidWeight(enteredWeight) {
@@ -100,74 +102,70 @@ const plateVisualizer = {
     unit.setAttribute("id", "unit");
     weightDisplay.appendChild(unit);
   },
-};
 
-/*
+  renderVisualizer(enteredWeight) {
 
-
-  renderVisualizer(weight) {
+    // Clear visualizer nodes
     const visualizer = document.querySelector("[data-display='visualizer']");
-    this.clearVisualizerDisplay(visualizer);
-    oneRepMax.renderWeightOutput(weight);
-  },
+    this.clearContainerNodes(visualizer);
 
-};
+    // Cycle through array of needed plates
+    this.getWeightIncrements(enteredWeight).forEach(increment => {
 
-const oldPlateVisualizer = {
-  increments: [45, 25, 10, 5, 2.5],
-  barWeight: 45,
-
-  renderWeightOutput(weight) {
-    const platesNeeded = this.getWeightIncrements(weight);
-    for (const increment of platesNeeded) {
-      if (increment[1] === 0) {
-        continue;
-      }
-
-      // Create container
+      // Create container element with class named from increment
       const incrementContainer = document.createElement("div");
-      const plateIconClass = `plate-${increment[0]
-        .toString()
-        .replace(".", "-")}`;
+      const plateIconClass = `plate-${increment[0].toString().replace(".", "-")}`;
       incrementContainer.classList.add("incrementContainer", plateIconClass);
 
-      // Create text
-      const description = incrementContainer.appendChild(
-        document.createElement("h3"),
-      );
+      // Create description text
+      const description = document.createElement("h3");
       description.textContent = `${increment[1]} \u00D7 ${increment[0]}`;
+      incrementContainer.appendChild(description);
 
-      // Create plates container
-      const plateContainer = incrementContainer.appendChild(
-        document.createElement("div"),
-      );
+      // Create plate container
+      const plateContainer = document.createElement("div");
       plateContainer.classList.add("plateContainer");
+      incrementContainer.appendChild(plateContainer);
 
       // Create each plate
-      for (i = 0; i < increment[1]; i++) {
+      for (let i=0; i<increment[1]; i+=1) {
         plateContainer.appendChild(document.createElement("div"));
       }
 
       visualizer.appendChild(incrementContainer);
     }
+    );
   },
 
-  getWeightIncrements(weight) {
-    if (weight <= this.barWeight) return [];
-    weight = (weight - this.barWeight) / 2;
-    const platesNeeded = this.increments.map((increment) => {
+  clearContainerNodes(element) {
+    while (element.firstChild) {
+      element.removeChild(element.firstChild);
+    }
+  },
+
+  getWeightIncrements(enteredWeight) {
+    if (enteredWeight <= this.barWeight) return [];
+
+    // Get weight from one side of bar
+    let weight = (enteredWeight - this.barWeight) / 2;
+
+    // Create array with plates needed per increment
+    let platesNeeded = this.increments.map(increment => {
       const plates = Math.floor(weight / increment);
       weight %= increment;
       return [increment, plates];
     });
 
+    // Add custom plate to cover any remainder under 2.5 lbs.
     if (weight > 0) {
-      platesNeeded.push(["custom", Math.round(weight * 100) / 100]);
+      platesNeeded.push([Math.round(weight * 100) / 100, 1]);
     }
+
+    // Remove empty increments
+    platesNeeded = platesNeeded.filter(n => n[1] !== 0);
 
     return platesNeeded;
   },
 };
-*/
 
 export default plateVisualizer;
