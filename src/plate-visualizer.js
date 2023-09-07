@@ -13,7 +13,7 @@ const plateVisualizer = {
   generatePageElements() {
     // Generate visualizer display
     const resultDisplay = document.createElement("div");
-    resultDisplay.setAttribute("class", "result-display card");
+    resultDisplay.setAttribute("class", "result-display card plate-visualizer");
     resultDisplay.setAttribute("data-display", "visualizer");
 
     // Generate weight display
@@ -65,7 +65,6 @@ const plateVisualizer = {
   },
 
   initialize() {
-    this.currentWeight = this.getValidWeight(this.currentWeight);
     this.renderWeightOutput(this.currentWeight);
     this.renderVisualizer(this.currentWeight);
   },

@@ -1,0 +1,18 @@
+.result-display.one-rep-max {
+  flex-flow: column;
+}
+
+.result-display.one-rep-max h3 {
+  font-weight: bold;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.result-display.one-rep-max ul {
+  columns: 3;
+}
+
+.result-display.one-rep-max ul li {
+  margin-bottom: 1em;
+}
