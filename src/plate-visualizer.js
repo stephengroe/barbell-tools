@@ -114,7 +114,13 @@ const plateVisualizer = {
 
       // Create container element with class named from increment
       const incrementContainer = document.createElement("div");
-      const plateIconClass = `plate-${increment[0].toString().replace(".", "-")}`;
+      let plateIconClass;
+
+      if (increment[0] < 2.5) {
+        plateIconClass = "plate-custom";
+      } else {
+        plateIconClass = `plate-${increment[0].toString().replace(".", "-")}`;
+      }
       incrementContainer.classList.add("incrementContainer", plateIconClass);
 
       // Create description text

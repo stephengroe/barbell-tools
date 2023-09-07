@@ -1,3 +1,15 @@
+:root {
+  --plate-height: 100px;
+  --plate-width: 20px;
+
+  --x-large: 1;
+  --large: 0.85;
+  --medium: 0.65;
+  --small: 0.45;
+  --x-small: 0.3;
+  --xx-small: 0.2;
+}
+
 .incrementContainer {
   display: flex;
   flex-flow: column;
@@ -22,7 +34,7 @@
 
 [class*="plate-"] .plateContainer div {
   background-color: black;
-  border-radius: 7px;
+  border-radius: 3px;
   display: block;
 }
 

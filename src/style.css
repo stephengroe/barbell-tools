@@ -136,16 +136,6 @@ table {
   --lightgrey: #95a3b3;
   --black: #130303;
   --accent: orange;
-
-  --plate-height: 100px;
-  --plate-width: 20px;
-
-  --x-large: 1;
-  --large: 0.85;
-  --medium: 0.65;
-  --small: 0.45;
-  --x-small: 0.3;
-  --xx-small: 0.2;
 }
 
 body {
