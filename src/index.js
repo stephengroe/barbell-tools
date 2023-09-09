@@ -74,7 +74,7 @@ const content = {
 
     if (hasMenuNav) {
       const home = document.createElement("a");
-      home.textContent = "Home";
+      home.textContent = "<";
       home.addEventListener("click", () => {
         this.buildPage(this.generateMenu(), "Barbell Tools", false);
       });
