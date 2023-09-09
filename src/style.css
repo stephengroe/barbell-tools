@@ -144,6 +144,7 @@ body {
   min-height: 100vh;
   position: relative;
   padding-bottom: 25px;
+  margin: 0 1ch;
 }
 
 #header {
@@ -169,8 +170,9 @@ body {
 }
 
 #wrapper {
-  margin: 1ch;
   max-width: 800px;
+  min-width: 300px;
+  margin: auto;
 }
 
 a.card {
