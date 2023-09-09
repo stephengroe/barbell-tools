@@ -1,69 +1,14 @@
+import calculator from "./calculator";
+import "./strength-standards.css";
+
 const strengthStandards = {
-  initialize() {
-    const div = document.createElement("div");
-    div.textContent = "Standards!";
-    div.setAttribute("class", "card");
-    return [div];
-  },
-
-  updateStandards(bodyWeight, gender) {
-    const newStandards = this.getStandards(bodyWeight, gender);
-    document.querySelector("body").append(this.renderStandards(newStandards));
-  },
-
-  getStandards(bodyWeight, gender) {
-    // Get weight class closest to but no lower than bodyweight
-    const weightClass = Object.keys(this.standards[gender])
-      .reduce((acc, current) => {
-        if (acc >= bodyWeight) {
-          return acc;
-        }
-        return current;
-      });
-    return [gender, weightClass, this.standards[gender][weightClass]];
-  },
-
-  renderStandards([gender, weightClass, standardsList]) {
-    const div = document.createElement("div");
-    const heading = document.createElement("h2");
-    heading.textContent = `Standards for adult ${gender} (${weightClass}lbs. weight class)`;
-    div.append(heading);
-
-    const table = document.createElement("table");
-
-    // Create header rows with levels
-    const levels = ["", "I.", "II.", "III.", "IV.", "V."];
-    const headerRow = document.createElement("tr");
-    levels.forEach(level => {
-      const levelCell = document.createElement("th");
-      levelCell.textContent = level;
-      headerRow.append(levelCell);
-    });
-    table.append(headerRow);
-    
-    // Create row for each exercise
-    Object.entries(standardsList).forEach(exercise => {
-      const [title, weights] = exercise;
-      const weightRow = document.createElement("tr");
-      const titleCell = document.createElement("td");
-      titleCell.textContent = title.charAt(0).toUpperCase() + title.slice(1);
-      weightRow.append(titleCell);
-
-      weights.forEach(weight => {
-        const weightCell = document.createElement("td");
-        weightCell.textContent = weight;
-        weightRow.append(weightCell);
-      });
-      table.append(weightRow);
-    });
-
-    // Add it all together and return it
-    div.append(table);
-    return div;
-  },
+  currentGender: "male",
+  currentWeight: 165,
+  weightRange: [0, 900],
+  unit: "lbs.",
 
   standards: {
-    men: {
+    male: {
       114: {
         press: [53, 72, 90, 107, 129],
         bench: [84, 107, 130, 179, 222],
@@ -137,7 +82,7 @@ const strengthStandards = {
         deadlift: [183, 340, 388, 512, 617],
       },
     },
-    women: {
+    female: {
       97: {
         press: [31, 42, 50, 66, 85],
         bench: [49, 63, 73, 94, 116],
@@ -199,6 +144,182 @@ const strengthStandards = {
         deadlift: [107, 197, 229, 297, 364],
       },
     },
+  },
+
+  generatePageElements() {
+    // Generate visualizer display
+    const resultDisplay = document.createElement("div");
+    resultDisplay.setAttribute("class", "result-display card strength-standards");
+    resultDisplay.setAttribute("data-display", "visualizer");
+
+    // Generate weight display
+    const weightDisplay = document.createElement("div");
+    weightDisplay.setAttribute("class", "weight-display card");
+
+    const weightOutput = document.createElement("output");
+    weightOutput.dataset.display = "weight";
+
+    const maleButton = document.createElement("button");
+    maleButton.setAttribute("class", "accent-button");
+    maleButton.dataset.buttonValue = "male";
+    maleButton.textContent = "M";
+
+    const femaleButton = document.createElement("button");
+    femaleButton.setAttribute("class", "accent-button");
+    femaleButton.dataset.buttonValue = "female";
+    femaleButton.textContent = "F";
+
+    weightDisplay.append(weightOutput, maleButton, femaleButton);
+
+    
+    // Bind buttons to toggle gender
+    maleButton.addEventListener("click", () => {this.updateGender("male")});
+    femaleButton.addEventListener("click", () => {this.updateGender("female")
+    });
+
+    // Generate keypad
+    const keypad = calculator.createKeypad();
+    this.bindButtons(keypad, "button");
+
+    return [resultDisplay, weightDisplay, keypad];
+  },
+
+  bindButtons(parent, selector) {
+    const elements = parent.querySelectorAll(selector);
+
+    elements.forEach(element => {
+      element.addEventListener(
+        "click",
+        () => {
+          this.updateWeight(calculator.calculateFromButton(
+            this.currentWeight,
+            element.dataset.buttonAction,
+            element.dataset.buttonValue
+            )
+          );
+        }
+      );
+    });
+  },
+
+  initialize() {
+    this.updateWeight(this.currentWeight);
+    this.updateGender(this.currentGender);
+  },
+
+  getValidNumber(entered, fallback, range, outputElement) {
+    if (entered > range[1] || entered < range[0]) {
+      this.alertWeightError(outputElement);
+      return fallback;
+    }
+    return entered;
+  },
+  
+  alertWeightError(element) {
+    element.classList.add("error");
+    setTimeout(() => {
+      element.classList.remove("error");
+    }, "150");
+  },
+
+  renderWeightOutput(displayValue) {
+    const weightDisplay = document.querySelector("[data-display='weight']");
+    weightDisplay.textContent = displayValue.toString();
+    const unit = document.createElement("span");
+    unit.textContent = this.unit;
+    unit.setAttribute("id", "unit");
+    weightDisplay.appendChild(unit);
+  },
+
+  updateWeight(newWeight) {
+    console.log(newWeight);
+    const validWeight = this.getValidNumber(
+      newWeight,
+      this.currentWeight,
+      this.weightRange,
+      document.querySelector("[data-display='weight']")
+      );
+      this.currentWeight = validWeight;
+    this.renderWeightOutput(validWeight);
+    this.renderVisualizer(validWeight, this.currentGender);
+  },
+
+  updateGender(newGender) {
+    // Remove active class
+    if (document.querySelector(".accent-button.active")) {
+      document.querySelector(".accent-button.active").classList.remove("active");
+    }
+
+    // Add active class to selected gender
+    const currentButton = document.querySelector(`[data-button-value='${newGender}']`);
+    currentButton.classList.add("active");
+
+    this.currentGender = newGender;
+    this.renderVisualizer(this.currentWeight, newGender);
+  },
+
+  getWeightClass(weight, gender) {
+    // Get weight class closest to but no lower than bodyweight
+    let weightClass = Object.keys(this.standards[gender]);
+    weightClass = weightClass.reduce((acc, current) => {
+      if (acc >= weight) {
+        return acc;
+      }
+      return current;
+    });
+    
+    // Return object of standards
+    return weightClass;
+  },
+  
+  renderVisualizer(weight, gender) {
+    // Clear visualizer
+    const visualizer = document.querySelector("[data-display='visualizer']");
+    while (visualizer.firstChild) {
+      visualizer.removeChild(visualizer.firstChild);
+    }
+    
+    // Add heading
+    const weightClass = this.getWeightClass(weight, gender);
+    const heading = document.createElement("h2");
+    heading.textContent = `Standards for adult ${gender}`;
+    const subheading = document.createElement("h3");
+    subheading.textContent = `(Weight class: ${weightClass}${this.unit})`;
+    visualizer.append(heading, subheading);
+
+    // Create table
+    const table = document.createElement("table");
+    const standards = Object.entries(this.standards[gender][weightClass]);
+
+    // Create header rows with levels
+    const levels = ["", "I.", "II.", "III.", "IV.", "V."];
+    const headerRow = document.createElement("tr");
+    levels.forEach(level => {
+      const levelCell = document.createElement("th");
+      levelCell.textContent = level;
+      headerRow.append(levelCell);
+    });
+    table.append(headerRow);
+    
+    // Create row for each exercise
+    standards.forEach(exercise => {
+      const [title, liftWeights] = exercise;
+      const weightRow = document.createElement("tr");
+      const titleCell = document.createElement("td");
+      titleCell.textContent = title.charAt(0).toUpperCase() + title.slice(1);
+      weightRow.append(titleCell);
+
+      // Create cell for each weight
+      liftWeights.forEach(liftWeight => {
+        const weightCell = document.createElement("td");
+        weightCell.textContent = liftWeight;
+        weightRow.append(weightCell);
+      });
+      table.append(weightRow);
+    });
+
+    // Add it all together and return it
+    visualizer.append(table);
   },
 };
 

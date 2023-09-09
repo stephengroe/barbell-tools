@@ -69,9 +69,8 @@ const oneRepMax = {
   },
 
   initialize() {
-    this.renderWeightOutput(this.currentWeight);
-    this.renderRepsOutput(this.currentReps);
-    this.renderVisualizer(this.currentWeight, this.currentReps);
+    this.updateWeight(this.currentWeight);
+    this.updateReps(this.currentReps);
   },
 
   getValidNumber(entered, fallback, range, outputElement) {
