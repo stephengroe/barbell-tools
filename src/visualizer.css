@@ -10,6 +10,10 @@
   --xx-small: 0.2;
 }
 
+.result-display.plate-visualizer {
+  flex-direction: row;
+}
+
 .incrementContainer {
   display: flex;
   flex-flow: column;

@@ -2,6 +2,6 @@
   background-color: var(--red);
 }
 
-.result-display {
-  flex-flow: column;
+.result-display.strength-standards {
+  flex-direction: column;
 }
