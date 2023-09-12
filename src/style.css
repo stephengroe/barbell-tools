@@ -139,6 +139,7 @@ table {
 }
 
 body {
+  touch-action: manipulation;
   background-color: var(--black);
   font-family: "Inter", sans-serif;
   min-height: 100vh;
