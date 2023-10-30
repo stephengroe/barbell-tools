@@ -1,4 +1,6 @@
-# barbell.tools
+# Barbell Tools
+
+**A simple set of barbell calculators for the gym**
 
 ## Overview
 
